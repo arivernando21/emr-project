@@ -142,6 +142,27 @@ VALUES (
 
             $conn,
 
+            "INSERT INTO inpatients (
+
+            visit_id,
+            room_number,
+            notes
+
+            )
+
+            VALUES (
+
+            '$visit_id',
+            'KAMAR-101',
+            'Pasien memerlukan rawat inap'
+
+            )"
+        );
+
+        mysqli_query(
+
+            $conn,
+
             "UPDATE visits
 
         SET visit_status = 'inpatient'
