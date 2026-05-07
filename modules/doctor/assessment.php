@@ -34,6 +34,11 @@ $procedure_query = mysqli_query(
     "SELECT * FROM icd9_procedures"
 );
 
+$medicine_query = mysqli_query(
+    $conn,
+    "SELECT * FROM medicines"
+);
+
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +86,7 @@ $procedure_query = mysqli_query(
         <label>Diagnosis</label><br>
         <textarea name="diagnosis"></textarea><br><br>
 
-        <label>ICD</label><br>
+        <label>Diagnosa ICD 10</label><br>
 
         <select name="icd_id">
 
@@ -123,6 +128,142 @@ $procedure_query = mysqli_query(
 
         <label>Plan Dokter</label><br>
         <textarea name="doctor_plan"></textarea><br><br>
+
+        <h3>Resep Obat</h3>
+
+        <table border="1" cellpadding="10" id="medicine-table">
+
+            <tr>
+                <th>Obat</th>
+                <th>Dosis</th>
+                <th>Frekuensi</th>
+                <th>Durasi</th>
+                <th>Catatan</th>
+            </tr>
+
+            <tr>
+
+                <td>
+
+                    <select name="medicine_id[]">
+
+                        <option value="">
+                            -- Pilih Obat --
+                        </option>
+
+                        <?php
+
+                        $medicine_query = mysqli_query(
+                            $conn,
+                            "SELECT * FROM medicines"
+                        );
+
+                        while ($medicine = mysqli_fetch_assoc($medicine_query)) {
+
+                            ?>
+
+                            <option value="<?= $medicine['id']; ?>">
+
+                                <?= $medicine['medicine_name']; ?>
+
+                            </option>
+
+                        <?php } ?>
+
+                    </select>
+
+                </td>
+
+                <td>
+                    <input type="text" name="dosage[]">
+                </td>
+
+                <td>
+                    <input type="text" name="frequency[]">
+                </td>
+
+                <td>
+                    <input type="text" name="duration[]">
+                </td>
+
+                <td>
+                    <input type="text" name="medicine_notes[]">
+                </td>
+
+            </tr>
+
+        </table>
+
+        <br>
+
+        <button type="button" onclick="addMedicineRow()">
+
+            Tambah Obat
+
+        </button>
+
+        <script>
+
+            function addMedicineRow() {
+
+                let table =
+                    document.getElementById('medicine-table');
+
+                let row = table.insertRow();
+
+                row.innerHTML = `
+
+    <td>
+
+    <select name="medicine_id[]">
+
+    <option value="">
+    -- Pilih Obat --
+    </option>
+
+    <?php
+
+    $medicine_query2 = mysqli_query(
+        $conn,
+        "SELECT * FROM medicines"
+    );
+
+    while ($medicine2 = mysqli_fetch_assoc($medicine_query2)) {
+
+        ?>
+
+    <option value="<?= $medicine2['id']; ?>">
+
+    <?= $medicine2['medicine_name']; ?>
+
+    </option>
+
+    <?php } ?>
+
+    </select>
+
+    </td>
+
+    <td>
+    <input type="text" name="dosage[]">
+    </td>
+
+    <td>
+    <input type="text" name="frequency[]">
+    </td>
+
+    <td>
+    <input type="text" name="duration[]">
+    </td>
+
+    <td>
+    <input type="text" name="medicine_notes[]">
+    </td>
+
+    `;
+            }
+
+        </script>
 
         <label>Status Tindakan</label><br>
 

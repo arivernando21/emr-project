@@ -11,11 +11,21 @@ $diagnosis = $_POST['diagnosis'];
 $icd_id = $_POST['icd_id'];
 
 $procedure_icd9_id =
-$_POST['procedure_icd9_id'];
+    $_POST['procedure_icd9_id'];
 
 $doctor_plan = $_POST['doctor_plan'];
 
 $treatment_status = $_POST['treatment_status'];
+
+$medicine_ids = $_POST['medicine_id'];
+
+$dosages = $_POST['dosage'];
+
+$frequencies = $_POST['frequency'];
+
+$durations = $_POST['duration'];
+
+$medicine_notes = $_POST['medicine_notes'];
 
 $query = mysqli_query(
 
@@ -51,6 +61,45 @@ VALUES (
 );
 
 if ($query) {
+
+    $doctor_assessment_id =
+        mysqli_insert_id($conn);
+
+    for ($i = 0; $i < count($medicine_ids); $i++) {
+
+        if (!empty($medicine_ids[$i])) {
+
+            mysqli_query(
+
+                $conn,
+
+                "INSERT INTO prescriptions (
+
+        visit_id,
+        doctor_assessment_id,
+        medicine_id,
+        dosage,
+        frequency,
+        duration,
+        notes
+
+        )
+
+        VALUES (
+
+        '$visit_id',
+        '$doctor_assessment_id',
+        '" . $medicine_ids[$i] . "',
+        '" . $dosages[$i] . "',
+        '" . $frequencies[$i] . "',
+        '" . $durations[$i] . "',
+        '" . $medicine_notes[$i] . "'
+
+        )"
+            );
+        }
+    }
+
 
     if ($treatment_status == 'lab_request') {
         $doctor_assessment_id = mysqli_insert_id($conn);
