@@ -16,9 +16,9 @@ $treatment_status = $_POST['treatment_status'];
 
 $query = mysqli_query(
 
-$conn,
+    $conn,
 
-"INSERT INTO doctor_assessments (
+    "INSERT INTO doctor_assessments (
 
 visit_id,
 doctor_id,
@@ -45,75 +45,89 @@ VALUES (
 )"
 );
 
-if($query){
+if ($query) {
 
-    if($treatment_status == 'lab_request'){
+    if ($treatment_status == 'lab_request') {
+        $doctor_assessment_id = mysqli_insert_id($conn);
 
         mysqli_query(
 
-        $conn,
+            $conn,
 
-        "UPDATE visits
+            "INSERT INTO lab_orders (
+
+visit_id,
+doctor_assessment_id,
+order_notes
+
+)
+
+VALUES (
+
+'$visit_id',
+'$doctor_assessment_id',
+'Pemeriksaan laboratorium'
+
+)"
+        );
+
+        mysqli_query(
+
+            $conn,
+
+            "UPDATE visits
 
         SET visit_status = 'waiting_lab'
 
         WHERE id = '$visit_id'"
         );
 
-    }
-
-    elseif($treatment_status == 'inpatient'){
+    } elseif ($treatment_status == 'inpatient') {
 
         mysqli_query(
 
-        $conn,
+            $conn,
 
-        "UPDATE visits
+            "UPDATE visits
 
         SET visit_status = 'inpatient'
 
         WHERE id = '$visit_id'"
         );
 
-    }
-
-    elseif($treatment_status == 'observation'){
+    } elseif ($treatment_status == 'observation') {
 
         mysqli_query(
 
-        $conn,
+            $conn,
 
-        "UPDATE visits
+            "UPDATE visits
 
         SET visit_status = 'observation'
 
         WHERE id = '$visit_id'"
         );
 
-    }
-
-    elseif($treatment_status == 'referred'){
+    } elseif ($treatment_status == 'referred') {
 
         mysqli_query(
 
-        $conn,
+            $conn,
 
-        "UPDATE visits
+            "UPDATE visits
 
         SET visit_status = 'referred'
 
         WHERE id = '$visit_id'"
         );
 
-    }
-
-    else {
+    } else {
 
         mysqli_query(
 
-        $conn,
+            $conn,
 
-        "UPDATE visits
+            "UPDATE visits
 
         SET visit_status = 'waiting_pharmacy'
 
