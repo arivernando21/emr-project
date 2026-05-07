@@ -10,6 +10,9 @@ $diagnosis = $_POST['diagnosis'];
 
 $icd_id = $_POST['icd_id'];
 
+$procedure_icd9_id =
+$_POST['procedure_icd9_id'];
+
 $doctor_plan = $_POST['doctor_plan'];
 
 $treatment_status = $_POST['treatment_status'];
@@ -26,6 +29,7 @@ anamnesis,
 physical_exam,
 diagnosis,
 icd_id,
+procedure_icd9_id,
 doctor_plan,
 treatment_status
 
@@ -39,6 +43,7 @@ VALUES (
 '$physical_exam',
 '$diagnosis',
 '$icd_id',
+'$procedure_icd9_id',
 '$doctor_plan',
 '$treatment_status'
 

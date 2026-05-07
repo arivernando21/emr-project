@@ -6,9 +6,9 @@ $visit_id = $_GET['id'];
 
 $nurse_query = mysqli_query(
 
-$conn,
+    $conn,
 
-"SELECT nurse_assessments.*,
+    "SELECT nurse_assessments.*,
 patients.full_name
 
 FROM nurse_assessments
@@ -29,121 +29,147 @@ $icd_query = mysqli_query(
     "SELECT * FROM icd_codes"
 );
 
+$procedure_query = mysqli_query(
+    $conn,
+    "SELECT * FROM icd9_procedures"
+);
+
 ?>
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Assessment Dokter</title>
 </head>
+
 <body>
 
-<h1>Assessment Dokter</h1>
+    <h1>Assessment Dokter</h1>
 
-<h3>Data Perawat</h3>
+    <h3>Data Perawat</h3>
 
-<p><b>Pasien:</b>
-<?= $nurse['full_name']; ?></p>
+    <p><b>Pasien:</b>
+        <?= $nurse['full_name']; ?></p>
 
-<p><b>Subjective:</b>
-<?= $nurse['subjective']; ?></p>
+    <p><b>Subjective:</b>
+        <?= $nurse['subjective']; ?></p>
 
-<p><b>Objective:</b>
-<?= $nurse['objective']; ?></p>
+    <p><b>Objective:</b>
+        <?= $nurse['objective']; ?></p>
 
-<p><b>Assessment:</b>
-<?= $nurse['assessment']; ?></p>
+    <p><b>Assessment:</b>
+        <?= $nurse['assessment']; ?></p>
 
-<p><b>Plan:</b>
-<?= $nurse['plan']; ?></p>
+    <p><b>Plan:</b>
+        <?= $nurse['plan']; ?></p>
 
-<hr>
+    <hr>
 
-<form action="save_assessment.php" method="POST">
+    <form action="save_assessment.php" method="POST">
 
-<input type="hidden"
-name="visit_id"
-value="<?= $visit_id; ?>">
+        <input type="hidden" name="visit_id" value="<?= $visit_id; ?>">
 
-<h3>Assessment Dokter</h3>
+        <h3>Assessment Dokter</h3>
 
-<label>Anamnesis</label><br>
-<textarea name="anamnesis"></textarea><br><br>
+        <label>Anamnesis</label><br>
+        <textarea name="anamnesis"></textarea><br><br>
 
-<label>Pemeriksaan Fisik</label><br>
-<textarea name="physical_exam"></textarea><br><br>
+        <label>Pemeriksaan Fisik</label><br>
+        <textarea name="physical_exam"></textarea><br><br>
 
-<label>Diagnosis</label><br>
-<textarea name="diagnosis"></textarea><br><br>
+        <label>Diagnosis</label><br>
+        <textarea name="diagnosis"></textarea><br><br>
 
-<label>ICD</label><br>
+        <label>ICD</label><br>
 
-<select name="icd_id">
+        <select name="icd_id">
 
-<?php while($icd = mysqli_fetch_assoc($icd_query)) { ?>
+            <?php while ($icd = mysqli_fetch_assoc($icd_query)) { ?>
 
-<option value="<?= $icd['id']; ?>">
+                <option value="<?= $icd['id']; ?>">
 
-<?= $icd['icd_code']; ?>
--
-<?= $icd['icd_name']; ?>
+                    <?= $icd['icd_code']; ?>
+                    -
+                    <?= $icd['icd_name']; ?>
 
-</option>
+                </option>
 
-<?php } ?>
+            <?php } ?>
 
-</select>
+        </select>
 
-<br><br>
+        <br><br>
 
-<label>Plan Dokter</label><br>
-<textarea name="doctor_plan"></textarea><br><br>
+        <label>Tindakan ICD-9</label><br>
 
-<label>Status Tindakan</label><br>
+        <select name="procedure_icd9_id">
 
-<select name="treatment_status">
+            <?php while ($procedure = mysqli_fetch_assoc($procedure_query)) { ?>
 
-<option value="outpatient">
+                <option value="<?= $procedure['id']; ?>">
 
-Rawat Jalan
+                    <?= $procedure['procedure_code']; ?>
+                    -
+                    <?= $procedure['procedure_name']; ?>
 
-</option>
+                </option>
 
-<option value="lab_request">
+            <?php } ?>
 
-Periksa Lab
+        </select>
 
-</option>
+        <br><br>
 
-<option value="inpatient">
+        <label>Plan Dokter</label><br>
+        <textarea name="doctor_plan"></textarea><br><br>
 
-Rawat Inap
+        <label>Status Tindakan</label><br>
 
-</option>
+        <select name="treatment_status">
 
-<option value="observation">
+            <option value="outpatient">
 
-Observasi
+                Rawat Jalan
 
-</option>
+            </option>
 
-<option value="referred">
+            <option value="lab_request">
 
-Rujuk
+                Periksa Lab
 
-</option>
+            </option>
 
-</select>
+            <option value="inpatient">
 
-<br><br>
+                Rawat Inap
 
-<button type="submit">
+            </option>
 
-Simpan Assessment Dokter
+            <option value="observation">
 
-</button>
+                Observasi
 
-</form>
+            </option>
+
+            <option value="referred">
+
+                Rujuk
+
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+
+            Simpan Assessment Dokter
+
+        </button>
+
+    </form>
 
 </body>
+
 </html>
