@@ -4,6 +4,13 @@ include '../../config/database.php';
 
 $patient_id = $_GET['id'];
 
+$status_filter = '';
+
+if (isset($_GET['status'])) {
+
+    $status_filter = $_GET['status'];
+}
+
 $patient_query = mysqli_query(
 
     $conn,
@@ -32,6 +39,10 @@ ON doctor_assessments.icd_id = icd_codes.id
 
 WHERE visits.patient_id = '$patient_id'
 
+" . (!empty($status_filter)
+        ? " AND visits.visit_status = '$status_filter'"
+        : "") . "
+
 ORDER BY visits.visit_date DESC"
 );
 
@@ -42,9 +53,64 @@ ORDER BY visits.visit_date DESC"
 
 <head>
     <title>Riwayat Rekam Medis</title>
+    <style>
+        .badge {
+
+            padding: 5px 10px;
+
+            color: white;
+
+            border-radius: 5px;
+
+            font-size: 12px;
+        }
+
+        .waiting_nurse {
+
+            background: orange;
+        }
+
+        .waiting_doctor {
+
+            background: blue;
+        }
+
+        .waiting_lab {
+
+            background: purple;
+        }
+
+        .lab_result_ready {
+
+            background: teal;
+        }
+
+        .inpatient {
+
+            background: red;
+        }
+
+        .completed {
+
+            background: green;
+        }
+
+        .referred {
+
+            background: gray;
+        }
+    </style>
 </head>
 
 <body>
+
+    <a href="patients.php">
+
+        ← Kembali ke Pasien
+
+    </a>
+
+    <hr>
 
     <h1>Riwayat Rekam Medis Pasien</h1>
 
@@ -61,6 +127,48 @@ ORDER BY visits.visit_date DESC"
     </p>
 
     <hr>
+
+    <form method="GET">
+
+        <input type="hidden" name="id" value="<?= $patient_id; ?>">
+
+        <select name="status">
+
+            <option value="">
+                Semua Status
+            </option>
+
+            <option value="waiting_nurse">
+                Waiting Nurse
+            </option>
+
+            <option value="waiting_doctor">
+                Waiting Doctor
+            </option>
+
+            <option value="waiting_lab">
+                Waiting Lab
+            </option>
+
+            <option value="inpatient">
+                Rawat Inap
+            </option>
+
+            <option value="completed">
+                Completed
+            </option>
+
+        </select>
+
+        <button type="submit">
+
+            Filter
+
+        </button>
+
+    </form>
+
+    <br>
 
     <table border="1" cellpadding="10">
 
@@ -83,7 +191,13 @@ ORDER BY visits.visit_date DESC"
                 </td>
 
                 <td>
-                    <?= $visit['visit_status']; ?>
+
+                    <span class="badge <?= $visit['visit_status']; ?>">
+
+                        <?= $visit['visit_status']; ?>
+
+                    </span>
+
                 </td>
 
                 <td>

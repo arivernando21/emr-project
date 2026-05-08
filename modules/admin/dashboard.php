@@ -106,6 +106,21 @@ WHERE visit_status = 'completed'"
 
     <h1>Dashboard Admin EMR</h1>
 
+    <p>
+
+        Selamat datang,
+        <?= $_SESSION['name']; ?>
+
+    </p>
+
+    <a href="../../auth/logout.php">
+
+        Logout
+
+    </a>
+
+    <hr>
+
     <hr>
 
     <h2>Statistik Sistem</h2>
@@ -154,6 +169,26 @@ WHERE visit_status = 'completed'"
     <a href="patients.php">
 
         Kelola Pasien
+
+    </a>
+
+    |
+
+    <a href="dashboard.php">
+
+        Dashboard
+
+    </a>
+
+    |
+
+    <a href="activity_logs.php">
+
+        Activity Logs
+
+    </a>
+
+    Kelola Pasien
 
     </a>
 

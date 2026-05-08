@@ -2,12 +2,26 @@
 
 include '../../middleware/doctor_only.php';
 include '../../config/database.php';
+$total_queue = mysqli_fetch_assoc(
+
+    mysqli_query(
+
+        $conn,
+
+        "SELECT COUNT(*) as total
+
+FROM visits
+
+WHERE visit_status = 'waiting_doctor'"
+    )
+
+);
 
 $query = mysqli_query(
 
-$conn,
+    $conn,
 
-"SELECT visits.*, patients.full_name
+    "SELECT visits.*, patients.full_name
 
 FROM visits
 
@@ -21,47 +35,72 @@ WHERE visit_status = 'waiting_doctor'"
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard Dokter</title>
 </head>
+
 <body>
 
-<h1>Dashboard Dokter</h1>
+    <h1>Dashboard Dokter</h1>
 
-<table border="1" cellpadding="10">
+    <h3>
 
-<tr>
-    <th>Nama Pasien</th>
-    <th>Tanggal Visit</th>
-    <th>Status</th>
-    <th>Aksi</th>
-</tr>
+        Total Antrean Dokter:
+        <?= $total_queue['total']; ?>
 
-<?php while($visit = mysqli_fetch_assoc($query)) { ?>
+    </h3>
 
-<tr>
+    <p>
 
-<td><?= $visit['full_name']; ?></td>
+        Login sebagai:
+        <?= $_SESSION['name']; ?>
 
-<td><?= $visit['visit_date']; ?></td>
+    </p>
 
-<td><?= $visit['visit_status']; ?></td>
+    <a href="../../auth/logout.php">
 
-<td>
+        Logout
 
-<a href="assessment.php?id=<?= $visit['id']; ?>">
+    </a>
 
-Assessment Dokter
+    <hr>
 
-</a>
+    <table border="1" cellpadding="10">
 
-</td>
+        <tr>
+            <th>Nama Pasien</th>
+            <th>Tanggal Visit</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
 
-</tr>
+        <?php while ($visit = mysqli_fetch_assoc($query)) { ?>
 
-<?php } ?>
+            <tr>
 
-</table>
+                <td><?= $visit['full_name']; ?></td>
+
+                <td><?= $visit['visit_date']; ?></td>
+
+                <td><?= $visit['visit_status']; ?></td>
+
+                <td>
+
+                    <a href="assessment.php?id=<?= $visit['id']; ?>">
+
+                        Assessment Dokter
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+        <?php } ?>
+
+    </table>
 
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+include '../../helpers/log_activity.php';
 include '../../config/database.php';
 session_start();
 
@@ -23,9 +24,9 @@ $nurse_id = $_SESSION['user_id'];
 
 $query = mysqli_query(
 
-$conn,
+    $conn,
 
-"INSERT INTO nurse_assessments (
+    "INSERT INTO nurse_assessments (
 
 visit_id,
 nurse_id,
@@ -62,7 +63,16 @@ VALUES (
 )"
 );
 
-if($query){
+if ($query) {
+
+    logActivity(
+
+        $conn,
+
+        $_SESSION['user_id'],
+
+        'Membuat nurse assessment visit ID ' . $visit_id
+    );
 
     mysqli_query(
 
@@ -76,9 +86,5 @@ if($query){
     );
 
     echo "Assessment berhasil disimpan";
-
-} else {
-
-    echo "Gagal menyimpan assessment";
 }
 ?>

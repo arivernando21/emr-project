@@ -164,6 +164,14 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
 
 <body>
 
+    <a href="patient_history.php?id=<?= $visit['patient_id']; ?>">
+
+        ← Kembali ke Riwayat
+
+    </a>
+
+    <hr>
+
     <h1>Detail Rekam Medis</h1>
 
     <h3><?= $visit['full_name']; ?></h3>

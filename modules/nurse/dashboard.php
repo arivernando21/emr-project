@@ -3,6 +3,21 @@
 include '../../middleware/nurse_only.php';
 include '../../config/database.php';
 
+$total_queue = mysqli_fetch_assoc(
+
+    mysqli_query(
+
+        $conn,
+
+        "SELECT COUNT(*) as total
+
+FROM visits
+
+WHERE visit_status = 'waiting_nurse'"
+    )
+
+);
+
 $query = mysqli_query(
 
     $conn,
@@ -21,49 +36,74 @@ $query = mysqli_query(
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard Perawat</title>
 </head>
+
 <body>
 
-<h1>Dashboard Perawat</h1>
+    <h1>Dashboard Perawat</h1>
 
-<table border="1" cellpadding="10">
+    <h3>
 
-<tr>
-    <th>No Antrean</th>
-    <th>Nama Pasien</th>
-    <th>Tanggal Visit</th>
-    <th>Status</th>
-    <th>Aksi</th>
-</tr>
+        Total Antrean Perawat:
+        <?= $total_queue['total']; ?>
 
-<?php while($visit = mysqli_fetch_assoc($query)) { ?>
+    </h3>
 
-<tr>
-    <td><?= $visit['queue_number']; ?></td>
+    <p>
 
-    <td><?= $visit['full_name']; ?></td>
+        Login sebagai:
+        <?= $_SESSION['name']; ?>
 
-    <td><?= $visit['visit_date']; ?></td>
+    </p>
 
-    <td><?= $visit['visit_status']; ?></td>
+    <a href="../../auth/logout.php">
 
-    <td>
+        Logout
 
-        <a href="assessment.php?id=<?= $visit['id']; ?>">
+    </a>
 
-            Assessment
+    <hr>
 
-        </a>
+    <table border="1" cellpadding="10">
 
-    </td>
+        <tr>
+            <th>No Antrean</th>
+            <th>Nama Pasien</th>
+            <th>Tanggal Visit</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
 
-</tr>
+        <?php while ($visit = mysqli_fetch_assoc($query)) { ?>
 
-<?php } ?>
+            <tr>
+                <td><?= $visit['queue_number']; ?></td>
 
-</table>
+                <td><?= $visit['full_name']; ?></td>
+
+                <td><?= $visit['visit_date']; ?></td>
+
+                <td><?= $visit['visit_status']; ?></td>
+
+                <td>
+
+                    <a href="assessment.php?id=<?= $visit['id']; ?>">
+
+                        Assessment
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+        <?php } ?>
+
+    </table>
 
 </body>
+
 </html>

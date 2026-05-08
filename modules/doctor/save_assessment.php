@@ -1,6 +1,8 @@
 <?php
 
+include '../../helpers/log_activity.php';
 include '../../config/database.php';
+session_start();
 
 $visit_id = $_POST['visit_id'];
 
@@ -61,6 +63,15 @@ VALUES (
 );
 
 if ($query) {
+
+    logActivity(
+
+        $conn,
+
+        $_SESSION['user_id'],
+
+        'Membuat doctor assessment visit ID ' . $visit_id
+    );
 
     $doctor_assessment_id =
         mysqli_insert_id($conn);

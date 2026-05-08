@@ -1,5 +1,7 @@
 <?php
+session_start();
 
+include '../../helpers/log_activity.php';
 include '../../config/database.php';
 
 $patient_id = $_GET['id'];
@@ -46,6 +48,15 @@ $query = mysqli_query(
 );
 
 if ($query) {
+
+    logActivity(
+
+        $conn,
+
+        $_SESSION['user_id'],
+
+        'Membuat visit baru pasien ID ' . $patient_id
+    );
 
     echo "Visit berhasil dibuat";
 
