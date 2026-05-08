@@ -70,6 +70,7 @@ ORDER BY visits.visit_date DESC"
             <th>Status</th>
             <th>Diagnosis</th>
             <th>ICD-10</th>
+            <th>Detail</th>
 
         </tr>
 
@@ -91,6 +92,16 @@ ORDER BY visits.visit_date DESC"
 
                 <td>
                     <?= $visit['icd_name']; ?>
+                </td>
+
+                <td>
+
+                    <a href="visit_detail.php?id=<?= $visit['id']; ?>">
+
+                        Lihat Detail
+
+                    </a>
+
                 </td>
 
             </tr>
