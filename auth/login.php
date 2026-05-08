@@ -74,13 +74,13 @@ if (isset($_POST['login'])) {
 
         <label>Email</label><br>
 
-        <input type="email" name="email">
+        <input type="email" name="email" required>
 
         <br><br>
 
         <label>Password</label><br>
 
-        <input type="password" name="password">
+        <input type="password" name="password" required>
 
         <br><br>
 

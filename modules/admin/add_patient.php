@@ -4,9 +4,6 @@ include '../../config/database.php';
 
 if (isset($_POST['submit'])) {
 
-    $medical_record_number =
-        $_POST['medical_record_number'];
-
     $nik = $_POST['nik'];
 
     $full_name = $_POST['full_name'];
@@ -18,6 +15,25 @@ if (isset($_POST['submit'])) {
     $phone = $_POST['phone'];
 
     $address = $_POST['address'];
+
+    $count_query = mysqli_query(
+
+        $conn,
+
+        "SELECT COUNT(*) as total
+
+FROM patients"
+    );
+
+    $count = mysqli_fetch_assoc($count_query);
+
+    $medical_record_number =
+        'RM' . str_pad(
+            $count['total'] + 1,
+            4,
+            '0',
+            STR_PAD_LEFT
+        );
 
     $query = mysqli_query(
 
@@ -50,7 +66,8 @@ if (isset($_POST['submit'])) {
 
     if ($query) {
 
-        echo "Pasien berhasil ditambahkan";
+        header("Location: patients.php?success=1");
+        exit;
 
     } else {
 
@@ -74,25 +91,23 @@ if (isset($_POST['submit'])) {
 
         <label>No Rekam Medis</label><br>
 
-        <input type="text" name="medical_record_number">
-
         <br><br>
 
         <label>NIK</label><br>
 
-        <input type="text" name="nik">
+        <input type="text" name="nik" required>
 
         <br><br>
 
         <label>Nama Lengkap</label><br>
 
-        <input type="text" name="full_name">
+        <input type="text" name="full_name" required>
 
         <br><br>
 
         <label>Jenis Kelamin</label><br>
 
-        <select name="gender">
+        <select name="gender" required>
 
             <option value="male">
                 Laki-laki
@@ -108,19 +123,19 @@ if (isset($_POST['submit'])) {
 
         <label>Tanggal Lahir</label><br>
 
-        <input type="date" name="birth_date">
+        <input type="date" name="birth_date" required>
 
         <br><br>
 
         <label>No HP</label><br>
 
-        <input type="text" name="phone">
+        <input type="text" name="phone" required>
 
         <br><br>
 
         <label>Alamat</label><br>
 
-        <textarea name="address"></textarea>
+        <textarea name="address" required></textarea>
 
         <br><br>
 

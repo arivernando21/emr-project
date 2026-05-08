@@ -39,30 +39,30 @@ value="<?= $visit_id; ?>">
 <h3>Vital Sign</h3>
 
 <label>Tekanan Darah</label><br>
-<input type="text" name="blood_pressure"><br><br>
+<input type="text" name="blood_pressure" required><br><br>
 
 <label>Suhu</label><br>
-<input type="text" name="temperature"><br><br>
+<input type="text" name="temperature" required><br><br>
 
 <label>Nadi</label><br>
-<input type="text" name="pulse"><br><br>
+<input type="text" name="pulse" required><br><br>
 
 <label>Respirasi</label><br>
-<input type="text" name="respiration"><br><br>
+<input type="text" name="respiration" required><br><br>
 
 <h3>SOAP</h3>
 
 <label>Subjective</label><br>
-<textarea name="subjective"></textarea><br><br>
+<textarea name="subjective" required></textarea><br><br>
 
 <label>Objective</label><br>
-<textarea name="objective"></textarea><br><br>
+<textarea name="objective" required></textarea><br><br>
 
 <label>Assessment</label><br>
-<textarea name="assessment"></textarea><br><br>
+<textarea name="assessment" required></textarea><br><br>
 
 <label>Plan</label><br>
-<textarea name="plan"></textarea><br><br>
+<textarea name="plan" required></textarea><br><br>
 
 <h3>Triase</h3>
 

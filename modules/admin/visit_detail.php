@@ -128,6 +128,19 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
     <style>
         @media print {
 
+            .no-print {
+
+                display: block;
+            }
+
+            @media print {
+
+                .no-print {
+
+                    display: none;
+                }
+            }
+
             button {
 
                 display: none;
@@ -154,21 +167,35 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
     </style>
 </head>
 
-<button onclick="window.print()">
+<div class="no-print">
 
-    Cetak Rekam Medis
+    <button onclick="window.print()">
 
-</button>
+        Cetak Rekam Medis
 
-<br><br>
+    </button>
 
-<body>
+    <br><br>
+
+    <a href="print_prescription.php?id=<?= $visit['id']; ?>">
+
+        Cetak Resep
+
+    </a>
+
+    <br><br>
 
     <a href="patient_history.php?id=<?= $visit['patient_id']; ?>">
 
         ← Kembali ke Riwayat
 
     </a>
+
+</div>
+
+<br><br>
+
+<body>
 
     <hr>
 
@@ -189,6 +216,18 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
     <hr>
 
     <h2>SOAP Perawat</h2>
+
+
+    <p>
+
+        <b>Tanggal Assessment:</b>
+
+        <?= date(
+            'd-m-Y H:i',
+            strtotime($doctor['created_at'])
+        ); ?>
+
+    </p>
 
     <p>
 
@@ -221,6 +260,17 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
     <hr>
 
     <h2>Assessment Dokter</h2>
+
+    <p>
+
+        <b>Tanggal Assessment:</b>
+
+        <?= date(
+            'd-m-Y H:i',
+            strtotime($doctor['created_at'])
+        ); ?>
+
+    </p>
 
     <p>
 

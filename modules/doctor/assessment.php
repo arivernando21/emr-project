@@ -78,17 +78,17 @@ $medicine_query = mysqli_query(
         <h3>Assessment Dokter</h3>
 
         <label>Anamnesis</label><br>
-        <textarea name="anamnesis"></textarea><br><br>
+        <textarea name="anamnesis" required></textarea><br><br>
 
         <label>Pemeriksaan Fisik</label><br>
-        <textarea name="physical_exam"></textarea><br><br>
+        <textarea name="physical_exam" required></textarea><br><br>
 
         <label>Diagnosis</label><br>
-        <textarea name="diagnosis"></textarea><br><br>
+        <textarea name="diagnosis" required></textarea><br><br>
 
         <label>Diagnosa ICD 10</label><br>
 
-        <select name="icd_id">
+        <select name="icd_id" required>
 
             <?php while ($icd = mysqli_fetch_assoc($icd_query)) { ?>
 
@@ -108,7 +108,7 @@ $medicine_query = mysqli_query(
 
         <label>Tindakan ICD-9</label><br>
 
-        <select name="procedure_icd9_id">
+        <select name="procedure_icd9_id" required>
 
             <?php while ($procedure = mysqli_fetch_assoc($procedure_query)) { ?>
 
