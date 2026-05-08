@@ -140,6 +140,7 @@ while ($row = mysqli_fetch_assoc($chart_query)) {
 <html>
 
 <head>
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <style>
         body {
 
