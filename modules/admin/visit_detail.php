@@ -25,9 +25,14 @@ $nurse_query = mysqli_query(
 
     $conn,
 
-    "SELECT *
+    "SELECT nurse_assessments.*,
+
+users.name as nurse_name
 
 FROM nurse_assessments
+
+LEFT JOIN users
+ON nurse_assessments.nurse_id = users.id
 
 WHERE visit_id = '$visit_id'"
 );
@@ -39,10 +44,23 @@ $doctor_query = mysqli_query(
     $conn,
 
     "SELECT doctor_assessments.*,
-icd_codes.icd_name,
-icd9_procedures.procedure_name
+    users.name as doctor_name,
+    doctor_specializations.specialization_name
+    as specialization,
+    icd_codes.icd_name,
+    icd9_procedures.procedure_name
 
 FROM doctor_assessments
+
+LEFT JOIN users
+ON doctor_assessments.doctor_id = users.id
+
+LEFT JOIN doctors
+ON doctor_assessments.doctor_id = doctors.id
+
+LEFT JOIN doctor_specializations
+ON doctors.specialization_id =
+doctor_specializations.id
 
 LEFT JOIN icd_codes
 ON doctor_assessments.icd_id = icd_codes.id
@@ -106,7 +124,43 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
 
 <head>
     <title>Detail Rekam Medis</title>
+
+    <style>
+        @media print {
+
+            button {
+
+                display: none;
+            }
+
+            body {
+
+                font-family: Arial;
+            }
+
+            table {
+
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th,
+            td {
+
+                border: 1px solid black;
+                padding: 8px;
+            }
+        }
+    </style>
 </head>
+
+<button onclick="window.print()">
+
+    Cetak Rekam Medis
+
+</button>
+
+<br><br>
 
 <body>
 
@@ -127,6 +181,14 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
     <hr>
 
     <h2>SOAP Perawat</h2>
+
+    <p>
+
+        <b>Perawat:</b>
+
+        <?= $nurse['nurse_name']; ?>
+
+    </p>
 
     <p>
         <b>Subjective:</b><br>
@@ -151,6 +213,22 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
     <hr>
 
     <h2>Assessment Dokter</h2>
+
+    <p>
+
+        <b>Dokter:</b>
+
+        <?= $doctor['doctor_name']; ?>
+
+    </p>
+
+    <p>
+
+        <b>Spesialisasi:</b>
+
+        <?= $doctor['specialization']; ?>
+
+    </p>
 
     <p>
         <b>Anamnesis:</b><br>

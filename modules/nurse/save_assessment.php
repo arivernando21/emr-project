@@ -1,6 +1,7 @@
 <?php
 
 include '../../config/database.php';
+session_start();
 
 $visit_id = $_POST['visit_id'];
 
@@ -18,6 +19,7 @@ $triage_level = $_POST['triage_level'];
 
 $assigned_poli_id = $_POST['assigned_poli_id'];
 $assigned_doctor_id = $_POST['assigned_doctor_id'];
+$nurse_id = $_SESSION['user_id'];
 
 $query = mysqli_query(
 
@@ -26,6 +28,7 @@ $conn,
 "INSERT INTO nurse_assessments (
 
 visit_id,
+nurse_id,
 blood_pressure,
 temperature,
 pulse,
@@ -43,6 +46,7 @@ assigned_doctor_id
 VALUES (
 
 '$visit_id',
+'$nurse_id',
 '$blood_pressure',
 '$temperature',
 '$pulse',

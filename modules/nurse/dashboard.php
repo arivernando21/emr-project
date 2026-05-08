@@ -31,6 +31,7 @@ $query = mysqli_query(
 <table border="1" cellpadding="10">
 
 <tr>
+    <th>No Antrean</th>
     <th>Nama Pasien</th>
     <th>Tanggal Visit</th>
     <th>Status</th>
@@ -40,6 +41,7 @@ $query = mysqli_query(
 <?php while($visit = mysqli_fetch_assoc($query)) { ?>
 
 <tr>
+    <td><?= $visit['queue_number']; ?></td>
 
     <td><?= $visit['full_name']; ?></td>
 

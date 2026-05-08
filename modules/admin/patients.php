@@ -3,7 +3,33 @@
 include '../../middleware/admin_only.php';
 include '../../config/database.php';
 
-$query = mysqli_query($conn, "SELECT * FROM patients");
+$search = '';
+
+if (isset($_GET['search'])) {
+
+    $search = $_GET['search'];
+}
+
+$query = mysqli_query(
+
+    $conn,
+
+    "SELECT *
+
+FROM patients
+
+WHERE
+
+full_name LIKE '%$search%'
+
+OR
+
+medical_record_number LIKE '%$search%'
+
+OR
+
+nik LIKE '%$search%'"
+);
 
 ?>
 
@@ -17,6 +43,20 @@ $query = mysqli_query($conn, "SELECT * FROM patients");
 <body>
 
     <h1>Daftar Pasien</h1>
+
+    <form method="GET">
+
+        <input type="text" name="search" placeholder="Cari nama / no RM / NIK" value="<?= $search; ?>">
+
+        <button type="submit">
+
+            Cari
+
+        </button>
+
+    </form>
+
+    <br>
 
     <a href="add_patient.php">Tambah Pasien</a>
 

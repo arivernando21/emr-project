@@ -32,7 +32,7 @@ if (isset($_POST['login'])) {
 
             if ($user['role'] == 'admin') {
 
-                header("Location: ../modules/admin/patients.php");
+                header("Location: ../modules/admin/dashboard.php");
 
             } elseif ($user['role'] == 'nurse') {
 
