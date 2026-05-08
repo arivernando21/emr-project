@@ -1,5 +1,6 @@
 <?php
 
+include '../../middleware/nurse_only.php';
 include '../../config/database.php';
 
 $query = mysqli_query(

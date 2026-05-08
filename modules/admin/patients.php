@@ -1,5 +1,6 @@
 <?php
 
+include '../../middleware/admin_only.php';
 include '../../config/database.php';
 
 $query = mysqli_query($conn, "SELECT * FROM patients");

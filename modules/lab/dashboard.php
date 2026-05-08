@@ -1,5 +1,6 @@
 <?php
 
+include '../../middleware/auth.php';
 include '../../config/database.php';
 
 $query = mysqli_query(

@@ -1,23 +1,97 @@
+<?php
+
+session_start();
+
+include '../config/database.php';
+
+if (isset($_POST['login'])) {
+
+    $email = $_POST['email'];
+
+    $password = $_POST['password'];
+
+    $query = mysqli_query(
+
+        $conn,
+
+        "SELECT * FROM users
+    WHERE email = '$email'"
+    );
+
+    $user = mysqli_fetch_assoc($query);
+
+    if ($user) {
+
+        if (password_verify($password, $user['password'])) {
+
+            $_SESSION['user_id'] = $user['id'];
+
+            $_SESSION['name'] = $user['name'];
+
+            $_SESSION['role'] = $user['role'];
+
+            if ($user['role'] == 'admin') {
+
+                header("Location: ../modules/admin/patients.php");
+
+            } elseif ($user['role'] == 'nurse') {
+
+                header("Location: ../modules/nurse/dashboard.php");
+
+            } elseif ($user['role'] == 'doctor') {
+
+                header("Location: ../modules/doctor/dashboard.php");
+
+            } else {
+
+                echo "Role tidak dikenali";
+            }
+
+        } else {
+
+            echo "Password salah";
+        }
+
+    } else {
+
+        echo "User tidak ditemukan";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Login EMR</title>
 </head>
+
 <body>
 
-<h2>Login EMR</h2>
+    <h1>Login EMR</h1>
 
-<form action="process_login.php" method="POST">
+    <form method="POST">
 
-    <label>Email</label><br>
-    <input type="email" name="email"><br><br>
+        <label>Email</label><br>
 
-    <label>Password</label><br>
-    <input type="password" name="password"><br><br>
+        <input type="email" name="email">
 
-    <button type="submit">Login</button>
+        <br><br>
 
-</form>
+        <label>Password</label><br>
+
+        <input type="password" name="password">
+
+        <br><br>
+
+        <button type="submit" name="login">
+
+            Login
+
+        </button>
+
+    </form>
 
 </body>
+
 </html>
