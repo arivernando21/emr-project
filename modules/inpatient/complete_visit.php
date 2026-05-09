@@ -15,6 +15,17 @@ mysqli_query(
     WHERE id = '$visit_id'"
 );
 
+mysqli_query(
+
+    $conn,
+
+    "UPDATE inpatients
+
+    SET inpatient_status = 'completed'
+
+    WHERE visit_id = '$visit_id'"
+);
+
 header("Location: dashboard.php");
 
 ?>

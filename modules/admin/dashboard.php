@@ -67,6 +67,19 @@ WHERE visit_status = 'waiting_lab'"
 
 );
 
+$waiting_pharmacy = mysqli_fetch_assoc(
+
+    mysqli_query(
+
+        $conn,
+
+        "SELECT COUNT(*) as total
+FROM visits
+WHERE visit_status = 'waiting_pharmacy'"
+    )
+
+);
+
 $inpatient = mysqli_fetch_assoc(
 
     mysqli_query(
@@ -190,6 +203,14 @@ include '../../templates/navbar.php';
 
     </div>
 
+    <div class="card blue">
+
+        <?= $waiting_pharmacy['total']; ?>
+
+        <small>Waiting Pharmacy</small>
+
+    </div>
+
     <div class="card red">
 
         <?= $inpatient['total']; ?>
@@ -240,8 +261,38 @@ include '../../templates/navbar.php';
 
             <td>
 
-                <span class="badge
-                    <?= $visit['visit_status']; ?>">
+                <?php
+
+                $badge = 'badge-gray';
+
+                if ($visit['visit_status'] == 'waiting_nurse') {
+
+                    $badge = 'badge-orange';
+
+                } elseif ($visit['visit_status'] == 'waiting_doctor') {
+
+                    $badge = 'badge-purple';
+
+                } elseif ($visit['visit_status'] == 'waiting_lab') {
+
+                    $badge = 'badge-red';
+
+                } elseif ($visit['visit_status'] == 'waiting_pharmacy') {
+
+                    $badge = 'badge-blue';
+
+                } elseif ($visit['visit_status'] == 'inpatient') {
+
+                    $badge = 'badge-red';
+
+                } elseif ($visit['visit_status'] == 'completed') {
+
+                    $badge = 'badge-green';
+                }
+
+                ?>
+
+                <span class="badge <?= $badge; ?>">
 
                     <?= $visit['visit_status']; ?>
 
