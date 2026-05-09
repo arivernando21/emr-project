@@ -92,19 +92,21 @@ include '../../templates/navbar.php';
 
                 <td>
 
-                    <a href="create_visit.php?id=<?= $patient['id']; ?>">
+                    <div class="action-group">
 
-                        Buat Visit
+                        <a href="create_visit.php?id=<?= $patient['id']; ?>" class="action-btn table-btn">
 
-                    </a>
+                            Buat Visit
 
-                    |
+                        </a>
 
-                    <a href="patient_history.php?id=<?= $patient['id']; ?>">
+                        <a href="patient_history.php?id=<?= $patient['id']; ?>" class="action-btn table-btn gray-btn">
 
-                        Riwayat Medis
+                            Riwayat Medis
 
-                    </a>
+                        </a>
+
+                    </div>
 
                 </td>
             </tr>

@@ -117,89 +117,86 @@ WHERE visit_id = '$visit_id'"
 
 $inpatient = mysqli_fetch_assoc($inpatient_query);
 
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
+
 ?>
 
-<!DOCTYPE html>
-<html>
+<style>
+    @media print {
 
-<head>
-    <title>Detail Rekam Medis</title>
+        .no-print {
 
-    <style>
+            display: block;
+        }
+
         @media print {
 
             .no-print {
 
-                display: block;
-            }
-
-            @media print {
-
-                .no-print {
-
-                    display: none;
-                }
-            }
-
-            button {
-
                 display: none;
             }
-
-            body {
-
-                font-family: Arial;
-            }
-
-            table {
-
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            th,
-            td {
-
-                border: 1px solid black;
-                padding: 8px;
-            }
         }
-    </style>
+
+        button {
+
+            display: none;
+        }
+
+        body {
+
+            font-family: Arial;
+        }
+
+        table {
+
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+
+            border: 1px solid black;
+            padding: 8px;
+        }
+    }
+</style>
 </head>
 
 <div class="no-print">
 
-    <button onclick="window.print()">
+    <div class="no-print action-group">
 
-        Cetak Rekam Medis
+        <button class="action-btn" onclick="window.print()">
 
-    </button>
+            Cetak Rekam Medis
 
-    <br><br>
+        </button>
 
-    <a href="print_prescription.php?id=<?= $visit['id']; ?>">
+        <button class="action-btn green-btn" onclick="printPrescription()">
 
-        Cetak Resep
+            Cetak Resep
 
-    </a>
+        </button>
 
-    <br><br>
+        <a href="patient_history.php?id=<?= $visit['patient_id']; ?>" class="action-btn gray-btn">
 
-    <a href="patient_history.php?id=<?= $visit['patient_id']; ?>">
+            ← Kembali ke Riwayat
 
-        ← Kembali ke Riwayat
+        </a>
 
-    </a>
+    </div>
 
 </div>
 
 <br><br>
 
-<body>
+<hr>
 
-    <hr>
-
-    <h1>Detail Rekam Medis</h1>
+<h1>Detail Rekam Medis</h1>
+<div class="form-card">
 
     <h3><?= $visit['full_name']; ?></h3>
 
@@ -208,11 +205,36 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
         <?= $visit['visit_date']; ?>
     </p>
 
-    <p>
-        Status:
-        <?= $visit['visit_status']; ?>
-    </p>
+    <?php
 
+    $status = $visit['visit_status'];
+
+    $badge = 'badge-gray';
+
+    if ($status == 'waiting_nurse') {
+
+        $badge = 'badge-orange';
+
+    } elseif ($status == 'waiting_doctor') {
+
+        $badge = 'badge-purple';
+
+    } elseif ($status == 'waiting_lab') {
+
+        $badge = 'badge-red';
+
+    } elseif ($status == 'completed') {
+
+        $badge = 'badge-green';
+    }
+
+    ?>
+
+    <span class="badge <?= $badge; ?>">
+
+        <?= $status; ?>
+
+    </span>
     <hr>
 
     <h2>SOAP Perawat</h2>
@@ -399,7 +421,33 @@ $inpatient = mysqli_fetch_assoc($inpatient_query);
         </p>
 
     <?php } ?>
+</div>
 
-</body>
+<script>
 
-</html>
+function printPrescription() {
+
+    const iframe = document.createElement('iframe');
+
+    iframe.style.display = 'none';
+
+    iframe.src =
+        'print_prescription.php?id=<?= $visit['id']; ?>';
+
+    document.body.appendChild(iframe);
+
+    iframe.onload = function() {
+
+        iframe.contentWindow.focus();
+
+        iframe.contentWindow.print();
+    };
+}
+
+</script>
+
+<?php
+
+include '../../templates/footer.php';
+
+?>

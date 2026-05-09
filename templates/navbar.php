@@ -1,4 +1,4 @@
-<div class="navbar">
+<div class="navbar no-print">
 
     <?php if (isset($_SESSION['role'])) { ?>
 

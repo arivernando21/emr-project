@@ -460,3 +460,88 @@ button:hover {
 
     background: #27ae60;
 }
+
+.badge {
+
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.badge-orange {
+
+    background: #f39c12;
+}
+
+.badge-purple {
+
+    background: #8e44ad;
+}
+
+.badge-red {
+
+    background: #e74c3c;
+}
+
+.badge-green {
+
+    background: #27ae60;
+}
+
+.badge-blue {
+
+    background: #3498db;
+}
+
+.badge-gray {
+
+    background: #7f8c8d;
+}
+
+.action-group {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+    flex-wrap: wrap;
+}
+
+.green-btn {
+
+    background: #27ae60;
+}
+
+.green-btn:hover {
+
+    background: #219150;
+}
+
+.gray-btn {
+
+    background: #7f8c8d;
+}
+
+.gray-btn:hover {
+
+    background: #707b7c;
+}
+
+.table-btn {
+
+    padding: 8px 14px;
+
+    font-size: 13px;
+
+    border-radius: 6px;
+}

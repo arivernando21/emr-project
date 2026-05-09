@@ -27,12 +27,6 @@ include '../../templates/navbar.php';
 
 <h1>Activity Logs</h1>
 
-<a href="dashboard.php">
-
-    ← Dashboard
-
-</a>
-
 <hr>
 
 <div class="table-container">

@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <div class="container">
 
-        <div class="app-header">
+        <div class="app-header no-print">
 
             <h1>
 

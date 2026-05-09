@@ -50,7 +50,7 @@ include '../../templates/navbar.php';
 <h1>Assessment Dokter</h1>
 <div class="form-card">
 
-    <h3>Data Perawat</h3>
+    <h3>Data Pasien</h3>
 
     <p><b>Pasien:</b>
         <?= $nurse['full_name']; ?></p>

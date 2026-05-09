@@ -121,7 +121,40 @@ include '../../templates/navbar.php';
 
             <td><?= $visit['visit_date']; ?></td>
 
-            <td><?= $visit['visit_status']; ?></td>
+            <td>
+
+                <?php
+
+                $status = $visit['visit_status'];
+
+                $badge = 'badge-gray';
+
+                if ($status == 'waiting_nurse') {
+
+                    $badge = 'badge-orange';
+
+                } elseif ($status == 'waiting_doctor') {
+
+                    $badge = 'badge-purple';
+
+                } elseif ($status == 'waiting_lab') {
+
+                    $badge = 'badge-red';
+
+                } elseif ($status == 'completed') {
+
+                    $badge = 'badge-green';
+                }
+
+                ?>
+
+                <span class="badge <?= $badge; ?>">
+
+                    <?= $status; ?>
+
+                </span>
+
+            </td>
 
             <td>
 
