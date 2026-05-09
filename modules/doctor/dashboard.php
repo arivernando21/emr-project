@@ -21,7 +21,7 @@ $query = mysqli_query(
 
     $conn,
 
-    "SELECT visits.*, patients.full_name
+    "SELECT visits.*, patients.full_name, visits.is_lab_return
 
 FROM visits
 
@@ -176,11 +176,23 @@ include '../../templates/navbar.php';
 
                 <td>
 
-                    <a href="assessment.php?id=<?= $visit['id']; ?>">
+                    <?php if ($visit['is_lab_return'] == 1) { ?>
 
-                        Assessment Dokter
+                        <a class="action-btn" href="lab_review.php?id=<?= $visit['id']; ?>">
 
-                    </a>
+                            Lihat Hasil Lab
+
+                        </a>
+
+                    <?php } else { ?>
+
+                        <a class="action-btn" href="assessment.php?id=<?= $visit['id']; ?>">
+
+                            Assessment Dokter
+
+                        </a>
+
+                    <?php } ?>
 
                 </td>
 

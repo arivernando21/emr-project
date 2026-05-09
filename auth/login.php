@@ -43,6 +43,10 @@ if (isset($_POST['login'])) {
 
                 header("Location: ../modules/doctor/dashboard.php");
 
+            } elseif ($user['role'] == 'pharmacy') {
+
+                header("Location: ../modules/pharmacy/dashboard.php");
+                
             } else {
 
                 $error = "Role tidak dikenali";

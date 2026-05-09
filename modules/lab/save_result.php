@@ -4,11 +4,21 @@ include '../../config/database.php';
 
 $lab_order_id = $_POST['lab_order_id'];
 
-$result_value = $_POST['result_value'];
+$file_name = '';
 
-$result_notes = $_POST['result_notes'];
+if (!empty($_FILES['result_file']['name'])) {
 
-$result_status = $_POST['result_status'];
+    $file_name =
+        time() . '_' .
+        $_FILES['result_file']['name'];
+
+    move_uploaded_file(
+
+        $_FILES['result_file']['tmp_name'],
+
+        '../../assets/uploads/lab_results/' . $file_name
+    );
+}
 
 $query = mysqli_query(
 
@@ -17,18 +27,14 @@ $query = mysqli_query(
     "INSERT INTO lab_results (
 
 lab_order_id,
-result_value,
-result_notes,
-result_status
+result_file
 
 )
 
 VALUES (
 
 '$lab_order_id',
-'$result_value',
-'$result_notes',
-'$result_status'
+'$file_name'
 
 )"
 );
@@ -65,7 +71,8 @@ if ($query) {
 
         "UPDATE visits
 
-    SET visit_status = 'lab_result_ready'
+    SET visit_status = 'waiting_doctor',
+        is_lab_return = 1
 
     WHERE id = '" . $visit['visit_id'] . "'"
     );

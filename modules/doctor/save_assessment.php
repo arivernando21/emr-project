@@ -29,6 +29,21 @@ $durations = $_POST['duration'];
 
 $medicine_notes = $_POST['medicine_notes'];
 
+$doctor_query = mysqli_query(
+
+    $conn,
+
+    "SELECT id
+
+    FROM doctors
+
+    WHERE user_id = '" . $_SESSION['user_id'] . "'"
+);
+
+$doctor = mysqli_fetch_assoc($doctor_query);
+
+$doctor_id = $doctor['id'];
+
 $query = mysqli_query(
 
     $conn,
@@ -50,7 +65,7 @@ treatment_status
 VALUES (
 
 '$visit_id',
-2,
+'$doctor_id',
 '$anamnesis',
 '$physical_exam',
 '$diagnosis',
@@ -73,8 +88,22 @@ if ($query) {
         'Membuat doctor assessment visit ID ' . $visit_id
     );
 
-    $doctor_assessment_id =
-        mysqli_insert_id($conn);
+    $get_assessment = mysqli_query(
+
+        $conn,
+
+        "SELECT id
+
+    FROM doctor_assessments
+
+    ORDER BY id DESC
+
+    LIMIT 1"
+    );
+
+    $assessment = mysqli_fetch_assoc($get_assessment);
+
+    $assessment_id = $assessment['id'];
 
     for ($i = 0; $i < count($medicine_ids); $i++) {
 
@@ -99,7 +128,7 @@ if ($query) {
         VALUES (
 
         '$visit_id',
-        '$doctor_assessment_id',
+        " . (int) $assessment_id . ",
         '" . $medicine_ids[$i] . "',
         '" . $dosages[$i] . "',
         '" . $frequencies[$i] . "',
@@ -113,7 +142,6 @@ if ($query) {
 
 
     if ($treatment_status == 'lab_request') {
-        $doctor_assessment_id = mysqli_insert_id($conn);
 
         mysqli_query(
 
@@ -121,19 +149,19 @@ if ($query) {
 
             "INSERT INTO lab_orders (
 
-visit_id,
-doctor_assessment_id,
-order_notes
+                        visit_id,
+                        doctor_assessment_id,
+                        order_notes
 
-)
+                        )
 
-VALUES (
+            VALUES (
 
-'$visit_id',
-'$doctor_assessment_id',
-'Pemeriksaan laboratorium'
+                        '$visit_id',
+                        '$assessment_id',
+                        'Pemeriksaan laboratorium'
 
-)"
+                        )"
         );
 
         mysqli_query(

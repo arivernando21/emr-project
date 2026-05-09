@@ -2,53 +2,76 @@
 
 include '../../config/database.php';
 
-$id = $_GET['id'];
+$inpatient_id = $_GET['id'];
 
 $query = mysqli_query(
 
     $conn,
 
-    "UPDATE inpatients
-
-SET
-
-inpatient_status = 'discharged',
-
-discharge_date = NOW()
-
-WHERE id = '$id'"
-);
-
-if ($query) {
-
-    $visit_query = mysqli_query(
-
-        $conn,
-
-        "SELECT visit_id
+    "SELECT inpatients.*,
+    visits.id as visit_id,
+    patients.full_name
 
     FROM inpatients
 
-    WHERE id = '$id'"
-    );
+    JOIN visits
+    ON inpatients.visit_id = visits.id
 
-    $visit = mysqli_fetch_assoc($visit_query);
+    JOIN patients
+    ON visits.patient_id = patients.id
 
-    mysqli_query(
+    WHERE inpatients.id = '$inpatient_id'"
+);
 
-        $conn,
+$data = mysqli_fetch_assoc($query);
 
-        "UPDATE visits
+include '../../templates/header.php';
+include '../../templates/navbar.php';
 
-    SET visit_status = 'completed'
+?>
 
-    WHERE id = '" . $visit['visit_id'] . "'"
-    );
+<h1>Discharge Pasien</h1>
 
-    echo "Pasien berhasil dipulangkan";
+<div class="form-card">
 
-} else {
+    <p>
 
-    echo "Gagal memulangkan pasien";
-}
+        <b>Pasien:</b>
+        <?= $data['full_name']; ?>
+
+    </p>
+
+    <p>
+
+        <b>Kamar:</b>
+        <?= $data['room_number']; ?>
+
+    </p>
+
+    <form action="save_discharge.php" method="POST">
+
+        <input type="hidden" name="inpatient_id" value="<?= $data['id']; ?>">
+
+        <input type="hidden" name="visit_id" value="<?= $data['visit_id']; ?>">
+
+        <label>Catatan Pulang</label><br>
+
+        <textarea name="notes" required></textarea>
+
+        <br><br>
+
+        <button type="submit">
+
+            Discharge Pasien
+
+        </button>
+
+    </form>
+
+</div>
+
+<?php
+
+include '../../templates/footer.php';
+
 ?>

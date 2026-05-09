@@ -8,33 +8,30 @@ $query = mysqli_query(
     $conn,
 
     "SELECT inpatients.*,
-patients.full_name
+    patients.full_name,
+    visits.visit_status
 
-FROM inpatients
+    FROM inpatients
 
-JOIN visits
-ON inpatients.visit_id = visits.id
+    JOIN visits
+    ON inpatients.visit_id = visits.id
 
-JOIN patients
-ON visits.patient_id = patients.id
+    JOIN patients
+    ON visits.patient_id = patients.id
 
-WHERE inpatient_status = 'active'"
+    WHERE inpatient_status IN ('active', 'discharged')"
 );
+
+include '../../templates/header.php';
+include '../../templates/navbar.php';
 
 ?>
 
-<!DOCTYPE html>
-<html>
+<h1>Dashboard Rawat Inap</h1>
 
-<head>
-    <title>Dashboard Rawat Inap</title>
-</head>
+<div class="table-container">
 
-<body>
-
-    <h1>Dashboard Rawat Inap</h1>
-
-    <table border="1" cellpadding="10">
+    <table>
 
         <tr>
 
@@ -46,25 +43,56 @@ WHERE inpatient_status = 'active'"
 
         </tr>
 
-        <?php while ($inpatient = mysqli_fetch_assoc($query)) { ?>
+        <?php while ($row = mysqli_fetch_assoc($query)) { ?>
 
             <tr>
 
-                <td><?= $inpatient['full_name']; ?></td>
+                <td><?= $row['full_name']; ?></td>
 
-                <td><?= $inpatient['room_number']; ?></td>
+                <td><?= $row['room_number']; ?></td>
 
-                <td><?= $inpatient['admission_date']; ?></td>
-
-                <td><?= $inpatient['inpatient_status']; ?></td>
+                <td><?= $row['admission_date']; ?></td>
 
                 <td>
 
-                    <a href="discharge.php?id=<?= $inpatient['id']; ?>">
+                    <?php
 
-                        Pulangkan
+                    $badge = 'badge-red';
 
-                    </a>
+                    if ($row['visit_status'] == 'discharged') {
+
+                        $badge = 'badge-green';
+                    }
+
+                    ?>
+
+                    <span class="badge <?= $badge; ?>">
+
+                        <?= $row['visit_status']; ?>
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <?php if ($row['inpatient_status'] == 'active') { ?>
+
+                        <a class="action-btn" href="discharge.php?id=<?= $row['id']; ?>">
+
+                            Discharge Pasien
+
+                        </a>
+
+                    <?php } else { ?>
+
+                        <a class="action-btn green-btn" href="complete_visit.php?visit_id=<?= $row['visit_id']; ?>">
+
+                            Selesaikan Visit
+
+                        </a>
+
+                    <?php } ?>
 
                 </td>
 
@@ -74,6 +102,10 @@ WHERE inpatient_status = 'active'"
 
     </table>
 
-</body>
+</div>
 
-</html>
+<?php
+
+include '../../templates/footer.php';
+
+?>

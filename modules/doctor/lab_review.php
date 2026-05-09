@@ -1,0 +1,291 @@
+<?php
+
+include '../../config/database.php';
+
+$visit_id = $_GET['id'];
+
+$nurse_query = mysqli_query(
+
+    $conn,
+
+    "SELECT nurse_assessments.*,
+    patients.full_name
+
+    FROM nurse_assessments
+
+    JOIN visits
+    ON nurse_assessments.visit_id = visits.id
+
+    JOIN patients
+    ON visits.patient_id = patients.id
+
+    WHERE visit_id = '$visit_id'"
+);
+
+$nurse = mysqli_fetch_assoc($nurse_query);
+
+$doctor_query = mysqli_query(
+
+    $conn,
+
+    "SELECT doctor_assessments.*,
+    icd_codes.icd_name
+
+    FROM doctor_assessments
+
+    LEFT JOIN icd_codes
+    ON doctor_assessments.icd_id = icd_codes.id
+
+    WHERE visit_id = '$visit_id'
+
+    ORDER BY doctor_assessments.id DESC
+
+    LIMIT 1"
+);
+
+$doctor = mysqli_fetch_assoc($doctor_query);
+
+$lab_query = mysqli_query(
+
+    $conn,
+
+    "SELECT lab_results.*,
+    lab_orders.order_notes
+
+    FROM lab_results
+
+    JOIN lab_orders
+    ON lab_results.lab_order_id = lab_orders.id
+
+    WHERE lab_orders.visit_id = '$visit_id'
+
+    ORDER BY lab_results.id DESC
+
+    LIMIT 1"
+);
+
+$lab = mysqli_fetch_assoc($lab_query);
+
+$medicine_query = mysqli_query(
+    $conn,
+    "SELECT * FROM medicines"
+);
+
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
+
+?>
+
+<h1>Review Hasil Lab</h1>
+
+<div class="form-card">
+
+    <h3>Data Pasien</h3>
+
+    <p><b>Pasien:</b>
+        <?= $nurse['full_name']; ?></p>
+
+    <hr>
+
+    <h3>SOAP Perawat</h3>
+
+    <p><b>Subjective:</b>
+        <?= $nurse['subjective']; ?></p>
+
+    <p><b>Objective:</b>
+        <?= $nurse['objective']; ?></p>
+
+    <p><b>Assessment:</b>
+        <?= $nurse['assessment']; ?></p>
+
+    <p><b>Plan:</b>
+        <?= $nurse['plan']; ?></p>
+
+    <hr>
+
+    <h3>Assessment Dokter Awal</h3>
+
+    <p><b>Anamnesis:</b>
+        <?= $doctor['anamnesis']; ?></p>
+
+    <p><b>Pemeriksaan Fisik:</b>
+        <?= $doctor['physical_exam']; ?></p>
+
+    <p><b>Diagnosis:</b>
+        <?= $doctor['diagnosis']; ?></p>
+
+    <p><b>ICD:</b>
+        <?= $doctor['icd_name']; ?></p>
+
+    <p><b>Plan Dokter:</b>
+        <?= $doctor['doctor_plan']; ?></p>
+
+    <hr>
+
+    <h3>Hasil Lab</h3>
+
+    <img src="../../assets/uploads/lab_results/<?= $lab['result_file']; ?>" style="
+
+width:100%;
+max-width:700px;
+border-radius:10px;
+margin-top:15px;
+border:1px solid #ccc;
+
+">
+
+    <hr>
+
+    <form action="save_lab_review.php" method="POST">
+
+        <input type="hidden" name="visit_id" value="<?= $visit_id; ?>">
+
+        <h3>Resep Obat</h3>
+
+        <div class="table-container">
+
+            <table id="medicine-table">
+
+                <tr>
+                    <th>Obat</th>
+                    <th>Dosis</th>
+                    <th>Frekuensi</th>
+                    <th>Durasi</th>
+                    <th>Catatan</th>
+                </tr>
+
+                <tr>
+
+                    <td>
+
+                        <select name="medicine_id[]">
+
+                            <option value="">
+                                -- Pilih Obat --
+                            </option>
+
+                            <?php while ($medicine = mysqli_fetch_assoc($medicine_query)) { ?>
+
+                                <option value="<?= $medicine['id']; ?>">
+
+                                    <?= $medicine['medicine_name']; ?>
+
+                                </option>
+
+                            <?php } ?>
+
+                        </select>
+
+                    </td>
+
+                    <td>
+                        <input type="text" name="dosage[]">
+                    </td>
+
+                    <td>
+                        <input type="text" name="frequency[]">
+                    </td>
+
+                    <td>
+                        <input type="text" name="duration[]">
+                    </td>
+
+                    <td>
+                        <input type="text" name="medicine_notes[]">
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <br>
+
+        <button type="button" class="action-btn" onclick="addMedicineRow()">
+
+            Tambah Obat
+
+        </button>
+
+        <br><br>
+
+        <button type="submit">
+
+            Kirim ke Farmasi
+
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+    function addMedicineRow() {
+
+        let table =
+            document.getElementById('medicine-table');
+
+        let row = table.insertRow();
+
+        row.innerHTML = `
+
+    <td>
+
+    <select name="medicine_id[]">
+
+    <option value="">
+    -- Pilih Obat --
+    </option>
+
+    <?php
+
+    $medicine_query2 = mysqli_query(
+        $conn,
+        "SELECT * FROM medicines"
+    );
+
+    while ($medicine2 = mysqli_fetch_assoc($medicine_query2)) {
+
+        ?>
+
+    <option value="<?= $medicine2['id']; ?>">
+
+    <?= $medicine2['medicine_name']; ?>
+
+    </option>
+
+    <?php } ?>
+
+    </select>
+
+    </td>
+
+    <td>
+    <input type="text" name="dosage[]">
+    </td>
+
+    <td>
+    <input type="text" name="frequency[]">
+    </td>
+
+    <td>
+    <input type="text" name="duration[]">
+    </td>
+
+    <td>
+    <input type="text" name="medicine_notes[]">
+    </td>
+
+    `;
+    }
+
+</script>
+
+<?php
+
+include '../../templates/footer.php';
+
+?>
