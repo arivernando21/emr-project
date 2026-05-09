@@ -31,137 +31,108 @@ OR
 nik LIKE '%$search%'"
 );
 
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
+
 ?>
 
-<!DOCTYPE html>
-<html>
+<h1>Daftar Pasien</h1>
 
-<head>
-    <style>
-        .alert-success {
+<?php if (isset($_GET['success'])) { ?>
 
-            background: #d4edda;
+    <p class="alert-success" id="success-alert">
 
-            color: #155724;
+        Pasien berhasil ditambahkan
 
-            padding: 10px;
+    </p>
 
-            margin-bottom: 20px;
+<?php } ?>
 
-            border-radius: 5px;
-        }
+<form method="GET" style="display:flex;
+                                    gap:10px;
+                                    align-items:center;">
 
-        .table-container {
+    <input type="text" name="search" placeholder="Cari nama / no RM / NIK" value="<?= $search; ?>">
 
-            overflow-x: auto;
+    <button type="submit">
 
-            margin-top: 20px;
-        }
+        Cari
 
-        table {
+    </button>
 
-            width: 100%;
+</form>
 
-            border-collapse: collapse;
-        }
+<br>
 
-        th {
+<a href="add_patient.php" class="action-btn">
 
-            background: #f2f2f2;
-        }
-    </style>
-    <title>Patients</title>
-</head>
+    Tambah Pasien
 
-<body>
+</a>
 
-    <h1>Daftar Pasien</h1>
+<br><br>
 
-    <?php if (isset($_GET['success'])) { ?>
+<div class="table-container">
+    <table>
 
-        <p class="alert-success" id="success-alert">
+        <tr>
+            <th>No RM</th>
+            <th>Nama</th>
+            <th>NIK</th>
+            <th>Aksi</th>
+        </tr>
 
-            Pasien berhasil ditambahkan
-
-        </p>
-
-    <?php } ?>
-
-    <form method="GET">
-
-        <input type="text" name="search" placeholder="Cari nama / no RM / NIK" value="<?= $search; ?>">
-
-        <button type="submit">
-
-            Cari
-
-        </button>
-
-    </form>
-
-    <br>
-
-    <a href="add_patient.php">Tambah Pasien</a>
-
-    <br><br>
-
-    <div class="table-container">
-        <table border="1" cellpadding="10">
+        <?php while ($patient = mysqli_fetch_assoc($query)) { ?>
 
             <tr>
-                <th>No RM</th>
-                <th>Nama</th>
-                <th>NIK</th>
-                <th>Aksi</th>
+                <td><?= $patient['medical_record_number']; ?></td>
+                <td><?= $patient['full_name']; ?></td>
+                <td><?= $patient['nik']; ?></td>
+
+                <td>
+
+                    <a href="create_visit.php?id=<?= $patient['id']; ?>">
+
+                        Buat Visit
+
+                    </a>
+
+                    |
+
+                    <a href="patient_history.php?id=<?= $patient['id']; ?>">
+
+                        Riwayat Medis
+
+                    </a>
+
+                </td>
             </tr>
 
-            <?php while ($patient = mysqli_fetch_assoc($query)) { ?>
+        <?php } ?>
 
-                <tr>
-                    <td><?= $patient['medical_record_number']; ?></td>
-                    <td><?= $patient['full_name']; ?></td>
-                    <td><?= $patient['nik']; ?></td>
+    </table>
+</div>
 
-                    <td>
+<script>
 
-                        <a href="create_visit.php?id=<?= $patient['id']; ?>">
+    setTimeout(() => {
 
-                            Buat Visit
+        const alert =
+            document.getElementById('success-alert');
 
-                        </a>
+        if (alert) {
 
-                        |
+            alert.style.display = 'none';
+        }
 
-                        <a href="patient_history.php?id=<?= $patient['id']; ?>">
+    }, 3000);
 
-                            Riwayat Medis
+</script>
+</div>
 
-                        </a>
+<?php
 
-                    </td>
-                </tr>
+include '../../templates/footer.php';
 
-            <?php } ?>
-
-        </table>
-    </div>
-
-    <script>
-
-        setTimeout(() => {
-
-            const alert =
-                document.getElementById('success-alert');
-
-            if (alert) {
-
-                alert.style.display = 'none';
-            }
-
-        }, 3000);
-
-    </script>
-
-</body>
-
-</html>
+?>

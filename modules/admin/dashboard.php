@@ -135,451 +135,186 @@ while ($row = mysqli_fetch_assoc($chart_query)) {
 }
 
 ?>
+<?php
 
-<!DOCTYPE html>
-<html>
+include '../../templates/header.php';
 
-<head>
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <style>
-        body {
+include '../../templates/navbar.php';
 
-            font-family: Arial;
-        }
+?>
 
-        .dashboard-cards {
+<h1>Dashboard Admin EMR</h1>
 
-            display: flex;
+<p>
 
-            flex-wrap: wrap;
+    Selamat datang,
+    <?= $_SESSION['name']; ?>
 
-            gap: 20px;
+</p>
 
-            margin-top: 20px;
-        }
+<hr>
 
-        .card {
+<h2>Statistik Sistem</h2>
 
-            width: 220px;
+<div class="dashboard-cards">
 
-            padding: 20px;
+    <div class="card blue">
 
-            border-radius: 10px;
+        <?= $total_patients['total']; ?>
 
-            color: white;
-
-            font-size: 18px;
-
-            font-weight: bold;
-        }
-
-        .blue {
-            background: #3498db;
-        }
-
-        .green {
-            background: #27ae60;
-        }
-
-        .orange {
-            background: #f39c12;
-        }
-
-        .red {
-            background: #e74c3c;
-        }
-
-        .purple {
-            background: #8e44ad;
-        }
-
-        .gray {
-            background: #34495e;
-        }
-
-        .card small {
-
-            display: block;
-
-            margin-top: 10px;
-
-            font-size: 14px;
-        }
-
-        .badge {
-
-            padding: 5px 10px;
-
-            color: white;
-
-            border-radius: 5px;
-
-            font-size: 12px;
-        }
-
-        .waiting_nurse {
-
-            background: orange;
-        }
-
-        .waiting_doctor {
-
-            background: blue;
-        }
-
-        .waiting_lab {
-
-            background: purple;
-        }
-
-        .lab_result_ready {
-
-            background: teal;
-        }
-
-        .inpatient {
-
-            background: red;
-        }
-
-        .completed {
-
-            background: green;
-        }
-
-        .referred {
-
-            background: gray;
-        }
-
-        .app-header {
-
-            background: #2c3e50;
-
-            color: white;
-
-            padding: 20px;
-
-            border-radius: 10px;
-
-            margin-bottom: 20px;
-        }
-
-        .app-header h1 {
-
-            margin: 0;
-        }
-
-        .app-header p {
-
-            margin-top: 10px;
-        }
-
-        .navbar {
-
-            background: #34495e;
-
-            padding: 15px;
-
-            border-radius: 10px;
-
-            margin-bottom: 20px;
-        }
-
-        .navbar a {
-
-            color: white;
-
-            text-decoration: none;
-
-            margin-right: 20px;
-
-            font-weight: bold;
-        }
-
-        .navbar a:hover {
-
-            text-decoration: underline;
-        }
-
-        .quick-actions {
-
-            margin-bottom: 20px;
-        }
-
-        .action-btn {
-
-            display: inline-block;
-
-            background: #3498db;
-
-            color: white;
-
-            padding: 12px 20px;
-
-            border-radius: 8px;
-
-            text-decoration: none;
-
-            margin-right: 10px;
-
-            font-weight: bold;
-        }
-
-        .action-btn:hover {
-
-            background: #2980b9;
-        }
-    </style>
-    <title>Dashboard Admin</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-
-<body>
-    <div class="app-header">
-
-        <h1>
-
-            🏥 SIRS / EMR Rumah Sakit
-
-        </h1>
-
-        <p>
-
-            Sistem Informasi Rekam Medis
-
-        </p>
+        <small>Total Pasien</small>
 
     </div>
 
-    <div class="navbar">
+    <div class="card green">
 
-        <a href="dashboard.php">
+        <?= $total_visits['total']; ?>
 
-            Dashboard
-
-        </a>
-
-        <a href="patients.php">
-
-            Kelola Pasien
-
-        </a>
-
-        <a href="activity_logs.php">
-
-            Activity Logs
-
-        </a>
-
-        <a href="../../auth/logout.php">
-
-            Logout
-
-        </a>
+        <small>Total Visit</small>
 
     </div>
 
-    <div class="quick-actions">
+    <div class="card orange">
 
-        <a href="add_patient.php" class="action-btn">
+        <?= $waiting_nurse['total']; ?>
 
-            ➕ Tambah Pasien
-
-        </a>
-
-        <a href="patients.php" class="action-btn">
-
-            📋 Kelola Pasien
-
-        </a>
-
-        <a href="activity_logs.php" class="action-btn">
-
-            📄 Activity Logs
-
-        </a>
+        <small>Waiting Nurse</small>
 
     </div>
 
-    <h1>Dashboard Admin EMR</h1>
+    <div class="card purple">
 
-    <p>
+        <?= $waiting_doctor['total']; ?>
 
-        Selamat datang,
-        <?= $_SESSION['name']; ?>
-
-    </p>
-
-    <a href="../../auth/logout.php">
-
-        Logout
-
-    </a>
-
-    <hr>
-
-    <hr>
-
-    <h2>Statistik Sistem</h2>
-
-    <div class="dashboard-cards">
-
-        <div class="card blue">
-
-            <?= $total_patients['total']; ?>
-
-            <small>Total Pasien</small>
-
-        </div>
-
-        <div class="card green">
-
-            <?= $total_visits['total']; ?>
-
-            <small>Total Visit</small>
-
-        </div>
-
-        <div class="card orange">
-
-            <?= $waiting_nurse['total']; ?>
-
-            <small>Waiting Nurse</small>
-
-        </div>
-
-        <div class="card purple">
-
-            <?= $waiting_doctor['total']; ?>
-
-            <small>Waiting Doctor</small>
-
-        </div>
-
-        <div class="card red">
-
-            <?= $inpatient['total']; ?>
-
-            <small>Rawat Inap</small>
-
-        </div>
-
-        <div class="card gray">
-
-            <?= $completed['total']; ?>
-
-            <small>Completed</small>
-
-        </div>
+        <small>Waiting Doctor</small>
 
     </div>
 
-    <hr>
+    <div class="card red">
 
-    <h2>Workflow Pasien Hari Ini</h2>
+        <?= $inpatient['total']; ?>
 
-    <table border="1" cellpadding="10" width="100%">
+        <small>Rawat Inap</small>
+
+    </div>
+
+    <div class="card gray">
+
+        <?= $completed['total']; ?>
+
+        <small>Completed</small>
+
+    </div>
+
+</div>
+
+<hr>
+
+<h2>Workflow Pasien Hari Ini</h2>
+
+<table border="1" cellpadding="10" width="100%">
+
+    <tr>
+
+        <th>No Antrean</th>
+        <th>Pasien</th>
+        <th>Status</th>
+        <th>Tanggal Visit</th>
+
+    </tr>
+
+    <?php while (
+        $visit =
+        mysqli_fetch_assoc($workflow_query)
+    ) { ?>
 
         <tr>
 
-            <th>No Antrean</th>
-            <th>Pasien</th>
-            <th>Status</th>
-            <th>Tanggal Visit</th>
+            <td>
+                <?= $visit['queue_number']; ?>
+            </td>
+
+            <td>
+                <?= $visit['full_name']; ?>
+            </td>
+
+            <td>
+
+                <span class="badge
+                    <?= $visit['visit_status']; ?>">
+
+                    <?= $visit['visit_status']; ?>
+
+                </span>
+
+            </td>
+
+            <td>
+                <?= $visit['visit_date']; ?>
+            </td>
 
         </tr>
 
-        <?php while (
-            $visit =
-            mysqli_fetch_assoc($workflow_query)
-        ) { ?>
+    <?php } ?>
 
-            <tr>
+</table>
 
-                <td>
-                    <?= $visit['queue_number']; ?>
-                </td>
+<br><br>
 
-                <td>
-                    <?= $visit['full_name']; ?>
-                </td>
+<h2>Grafik Status Pasien</h2>
 
-                <td>
+<canvas id="visitChart" width="400" height="150">
 
-                    <span class="badge
-                    <?= $visit['visit_status']; ?>">
+</canvas>
 
-                        <?= $visit['visit_status']; ?>
-
-                    </span>
-
-                </td>
-
-                <td>
-                    <?= $visit['visit_date']; ?>
-                </td>
-
-            </tr>
-
-        <?php } ?>
-
-    </table>
-
-    <br><br>
-
-    <h2>Grafik Status Pasien</h2>
-
-    <canvas id="visitChart" width="400" height="150">
-
-    </canvas>
-
-    <br><br>
+<br><br>
 
 
 
-    <script>
+<script>
 
-        const ctx =
-            document.getElementById('visitChart');
+    const ctx =
+        document.getElementById('visitChart');
 
-        new Chart(ctx, {
+    new Chart(ctx, {
 
-            type: 'bar',
+        type: 'bar',
 
-            data: {
+        data: {
 
-                labels:
-                    <?= json_encode($chart_labels); ?>,
+            labels:
+                <?= json_encode($chart_labels); ?>,
 
-                datasets: [{
+            datasets: [{
 
-                    label:
-                        'Jumlah Status Visit',
+                label:
+                    'Jumlah Status Visit',
 
-                    data:
-                        <?= json_encode($chart_data); ?>,
+                data:
+                    <?= json_encode($chart_data); ?>,
 
-                    borderWidth: 1
-                }]
-            },
+                borderWidth: 1
+            }]
+        },
 
-            options: {
+        options: {
 
-                responsive: true,
+            responsive: true,
 
-                scales: {
+            scales: {
 
-                    y: {
+                y: {
 
-                        beginAtZero: true
-                    }
+                    beginAtZero: true
                 }
             }
-        });
+        }
+    });
 
-    </script>
+</script>
 
-</body>
+<?php
 
-</html>
+include '../../templates/footer.php';
+
+?>

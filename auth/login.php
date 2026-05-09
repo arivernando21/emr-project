@@ -4,6 +4,7 @@ session_start();
 
 include '../config/database.php';
 
+$error = '';
 if (isset($_POST['login'])) {
 
     $email = $_POST['email'];
@@ -44,17 +45,17 @@ if (isset($_POST['login'])) {
 
             } else {
 
-                echo "Role tidak dikenali";
+                $error = "Role tidak dikenali";
             }
 
         } else {
 
-            echo "Password salah";
+            $error = "Password salah";
         }
 
     } else {
 
-        echo "User tidak ditemukan";
+        $error = "User tidak ditemukan";
     }
 }
 ?>
@@ -63,34 +64,69 @@ if (isset($_POST['login'])) {
 <html>
 
 <head>
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>Login EMR</title>
 </head>
 
 <body>
+    <div class="login-wrapper">
 
-    <h1>Login EMR</h1>
+        <div class="login-card">
 
-    <form method="POST">
+            <h1>
 
-        <label>Email</label><br>
+                🏥 SIRS / EMR
 
-        <input type="email" name="email" required>
+            </h1>
 
-        <br><br>
+            <p>
 
-        <label>Password</label><br>
+                Sistem Informasi Rekam Medis
 
-        <input type="password" name="password" required>
+            </p>
 
-        <br><br>
+            <hr>
 
-        <button type="submit" name="login">
+            <?php if ($error != '') { ?>
 
-            Login
+                <p class="alert-error">
 
-        </button>
+                    <?= $error; ?>
 
-    </form>
+                </p>
+
+            <?php } ?>
+
+            <h2 style="text-align:center;">
+
+                Login
+
+            </h2>
+
+            <form method="POST">
+
+                <label>Email</label><br>
+
+                <input type="email" name="email" required>
+
+                <br><br>
+
+                <label>Password</label><br>
+
+                <input type="password" name="password" required>
+
+                <br><br>
+
+                <button type="submit" name="login">
+
+                    Login
+
+                </button>
+
+            </form>
+        </div>
+
+    </div>
 
 </body>
 

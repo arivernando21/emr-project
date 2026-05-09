@@ -31,18 +31,77 @@ ON visits.patient_id = patients.id
 WHERE visit_status = 'waiting_doctor'"
 );
 
+$waiting_doctor = mysqli_num_rows(
+
+    mysqli_query(
+
+        $conn,
+
+        "SELECT * FROM visits
+
+        WHERE visit_status = 'waiting_doctor'"
+    )
+);
+
+$waiting_lab = mysqli_num_rows(
+
+    mysqli_query(
+
+        $conn,
+
+        "SELECT * FROM visits
+
+        WHERE visit_status = 'waiting_lab'"
+    )
+);
+
+$waiting_pharmacy = mysqli_num_rows(
+
+    mysqli_query(
+
+        $conn,
+
+        "SELECT * FROM visits
+
+        WHERE visit_status = 'waiting_pharmacy'"
+    )
+);
+
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
+
 ?>
 
-<!DOCTYPE html>
-<html>
+<h1>Dashboard Dokter</h1>
+<div class="stats-grid">
 
-<head>
-    <title>Dashboard Dokter</title>
-</head>
+    <div class="stat-card purple">
 
-<body>
+        <h2><?= $waiting_doctor; ?></h2>
 
-    <h1>Dashboard Dokter</h1>
+        <p>Waiting Doctor</p>
+
+    </div>
+
+    <div class="stat-card red">
+
+        <h2><?= $waiting_lab; ?></h2>
+
+        <p>Waiting Lab</p>
+
+    </div>
+
+    <div class="stat-card green">
+
+        <h2><?= $waiting_pharmacy; ?></h2>
+
+        <p>Waiting Pharmacy</p>
+
+    </div>
+
+</div>
+<div class="form-card">
 
     <h3>
 
@@ -58,15 +117,12 @@ WHERE visit_status = 'waiting_doctor'"
 
     </p>
 
-    <a href="../../auth/logout.php">
-
-        Logout
-
-    </a>
-
     <hr>
+</div>
 
-    <table border="1" cellpadding="10">
+<div class="table-container">
+
+    <table>
 
         <tr>
             <th>Nama Pasien</th>
@@ -100,7 +156,10 @@ WHERE visit_status = 'waiting_doctor'"
         <?php } ?>
 
     </table>
+</div>
 
-</body>
+<?php
 
-</html>
+include '../../templates/footer.php';
+
+?>

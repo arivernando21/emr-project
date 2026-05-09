@@ -19,107 +19,108 @@ $doctor_query = mysqli_query(
     ON doctors.user_id = users.id"
 );
 
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Assessment Perawat</title>
-</head>
-<body>
+
 
 <h1>Assessment Perawat</h1>
+<div class="form-card">
 
-<form action="save_assessment.php" method="POST">
+    <form action="save_assessment.php" method="POST">
 
-<input type="hidden"
-name="visit_id"
-value="<?= $visit_id; ?>">
+        <input type="hidden" name="visit_id" value="<?= $visit_id; ?>">
 
-<h3>Vital Sign</h3>
+        <h3>Vital Sign</h3>
 
-<label>Tekanan Darah</label><br>
-<input type="text" name="blood_pressure" required><br><br>
+        <label>Tekanan Darah</label><br>
+        <input type="text" name="blood_pressure" required><br><br>
 
-<label>Suhu</label><br>
-<input type="text" name="temperature" required><br><br>
+        <label>Suhu</label><br>
+        <input type="text" name="temperature" required><br><br>
 
-<label>Nadi</label><br>
-<input type="text" name="pulse" required><br><br>
+        <label>Nadi</label><br>
+        <input type="text" name="pulse" required><br><br>
 
-<label>Respirasi</label><br>
-<input type="text" name="respiration" required><br><br>
+        <label>Respirasi</label><br>
+        <input type="text" name="respiration" required><br><br>
 
-<h3>SOAP</h3>
+        <h3>SOAP</h3>
 
-<label>Subjective</label><br>
-<textarea name="subjective" required></textarea><br><br>
+        <label>Subjective</label><br>
+        <textarea name="subjective" required></textarea><br><br>
 
-<label>Objective</label><br>
-<textarea name="objective" required></textarea><br><br>
+        <label>Objective</label><br>
+        <textarea name="objective" required></textarea><br><br>
 
-<label>Assessment</label><br>
-<textarea name="assessment" required></textarea><br><br>
+        <label>Assessment</label><br>
+        <textarea name="assessment" required></textarea><br><br>
 
-<label>Plan</label><br>
-<textarea name="plan" required></textarea><br><br>
+        <label>Plan</label><br>
+        <textarea name="plan" required></textarea><br><br>
 
-<h3>Triase</h3>
+        <h3>Triase</h3>
 
-<select name="triage_level">
+        <select name="triage_level">
 
-<option value="low">Low</option>
-<option value="medium">Medium</option>
-<option value="high">High</option>
-<option value="emergency">Emergency</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="emergency">Emergency</option>
 
-</select>
+        </select>
 
-<br><br>
+        <br><br>
 
-<h3>Poli Tujuan</h3>
+        <h3>Poli Tujuan</h3>
 
-<select name="assigned_poli_id">
+        <select name="assigned_poli_id">
 
-<?php while($poli = mysqli_fetch_assoc($poli_query)) { ?>
+            <?php while ($poli = mysqli_fetch_assoc($poli_query)) { ?>
 
-<option value="<?= $poli['id']; ?>">
+                <option value="<?= $poli['id']; ?>">
 
-<?= $poli['poli_name']; ?>
+                    <?= $poli['poli_name']; ?>
 
-</option>
+                </option>
 
-<?php } ?>
+            <?php } ?>
 
-</select>
+        </select>
 
-<br><br>
+        <br><br>
 
-<h3>Dokter Tujuan</h3>
+        <h3>Dokter Tujuan</h3>
 
-<select name="assigned_doctor_id">
+        <select name="assigned_doctor_id">
 
-<?php while($doctor = mysqli_fetch_assoc($doctor_query)) { ?>
+            <?php while ($doctor = mysqli_fetch_assoc($doctor_query)) { ?>
 
-<option value="<?= $doctor['id']; ?>">
+                <option value="<?= $doctor['id']; ?>">
 
-<?= $doctor['name']; ?>
+                    <?= $doctor['name']; ?>
 
-</option>
+                </option>
 
-<?php } ?>
+            <?php } ?>
 
-</select>
+        </select>
 
-<br><br>
+        <br><br>
 
-<button type="submit">
+        <button type="submit">
 
-Simpan Assessment
+            Simpan Assessment
 
-</button>
+        </button>
 
-</form>
+    </form>
+</div>
 
-</body>
-</html>
+<?php
+
+include '../../templates/footer.php';
+
+?>

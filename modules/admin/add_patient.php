@@ -74,18 +74,17 @@ FROM patients"
         echo "Gagal menambahkan pasien";
     }
 }
+
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
 ?>
 
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Tambah Pasien</title>
-</head>
 
-<body>
+<h1>Tambah Pasien</h1>
 
-    <h1>Tambah Pasien</h1>
+<div class="form-card">
 
     <form method="POST">
 
@@ -146,7 +145,10 @@ FROM patients"
         </button>
 
     </form>
+</div>
 
-</body>
+<?php
 
-</html>
+include '../../templates/footer.php';
+
+?>

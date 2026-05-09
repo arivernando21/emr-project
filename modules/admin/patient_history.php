@@ -46,131 +46,82 @@ WHERE visits.patient_id = '$patient_id'
 ORDER BY visits.visit_date DESC"
 );
 
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
+
 ?>
 
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Riwayat Rekam Medis</title>
-    <style>
-        .badge {
+<a href="patients.php">
 
-            padding: 5px 10px;
+    ← Kembali ke Pasien
 
-            color: white;
+</a>
 
-            border-radius: 5px;
+<hr>
 
-            font-size: 12px;
-        }
+<h1>Riwayat Rekam Medis Pasien</h1>
 
-        .waiting_nurse {
+<h3><?= $patient['full_name']; ?></h3>
 
-            background: orange;
-        }
+<p>
+    No RM:
+    <?= $patient['medical_record_number']; ?>
+</p>
 
-        .waiting_doctor {
+<p>
+    NIK:
+    <?= $patient['nik']; ?>
+</p>
 
-            background: blue;
-        }
+<hr>
 
-        .waiting_lab {
+<form method="GET">
 
-            background: purple;
-        }
+    <input type="hidden" name="id" value="<?= $patient_id; ?>">
 
-        .lab_result_ready {
+    <select name="status">
 
-            background: teal;
-        }
+        <option value="">
+            Semua Status
+        </option>
 
-        .inpatient {
+        <option value="waiting_nurse">
+            Waiting Nurse
+        </option>
 
-            background: red;
-        }
+        <option value="waiting_doctor">
+            Waiting Doctor
+        </option>
 
-        .completed {
+        <option value="waiting_lab">
+            Waiting Lab
+        </option>
 
-            background: green;
-        }
+        <option value="inpatient">
+            Rawat Inap
+        </option>
 
-        .referred {
+        <option value="completed">
+            Completed
+        </option>
 
-            background: gray;
-        }
-    </style>
-</head>
+    </select>
 
-<body>
+    <button type="submit">
 
-    <a href="patients.php">
+        Filter
 
-        ← Kembali ke Pasien
+    </button>
 
-    </a>
+</form>
 
-    <hr>
+<br>
 
-    <h1>Riwayat Rekam Medis Pasien</h1>
+<div class="table-container">
 
-    <h3><?= $patient['full_name']; ?></h3>
-
-    <p>
-        No RM:
-        <?= $patient['medical_record_number']; ?>
-    </p>
-
-    <p>
-        NIK:
-        <?= $patient['nik']; ?>
-    </p>
-
-    <hr>
-
-    <form method="GET">
-
-        <input type="hidden" name="id" value="<?= $patient_id; ?>">
-
-        <select name="status">
-
-            <option value="">
-                Semua Status
-            </option>
-
-            <option value="waiting_nurse">
-                Waiting Nurse
-            </option>
-
-            <option value="waiting_doctor">
-                Waiting Doctor
-            </option>
-
-            <option value="waiting_lab">
-                Waiting Lab
-            </option>
-
-            <option value="inpatient">
-                Rawat Inap
-            </option>
-
-            <option value="completed">
-                Completed
-            </option>
-
-        </select>
-
-        <button type="submit">
-
-            Filter
-
-        </button>
-
-    </form>
-
-    <br>
-
-    <table border="1" cellpadding="10">
+    <table>
 
         <tr>
 
@@ -223,7 +174,10 @@ ORDER BY visits.visit_date DESC"
         <?php } ?>
 
     </table>
+</div>
 
-</body>
+<?php
 
-</html>
+include '../../templates/footer.php';
+
+?>

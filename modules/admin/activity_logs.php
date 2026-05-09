@@ -19,28 +19,25 @@ ON activity_logs.user_id = users.id
 ORDER BY activity_logs.created_at DESC"
 );
 
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
+
 ?>
 
-<!DOCTYPE html>
-<html>
+<h1>Activity Logs</h1>
 
-<head>
-    <title>Activity Logs</title>
-</head>
+<a href="dashboard.php">
 
-<body>
+    ← Dashboard
 
-    <h1>Activity Logs</h1>
+</a>
 
-    <a href="dashboard.php">
+<hr>
 
-        ← Dashboard
+<div class="table-container">
 
-    </a>
-
-    <hr>
-
-    <table border="1" cellpadding="10">
+    <table>
 
         <tr>
 
@@ -71,7 +68,10 @@ ORDER BY activity_logs.created_at DESC"
         <?php } ?>
 
     </table>
+</div>
 
-</body>
+<?php
 
-</html>
+include '../../templates/footer.php';
+
+?>

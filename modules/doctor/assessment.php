@@ -39,18 +39,16 @@ $medicine_query = mysqli_query(
     "SELECT * FROM medicines"
 );
 
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
+
 ?>
 
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Assessment Dokter</title>
-</head>
 
-<body>
-
-    <h1>Assessment Dokter</h1>
+<h1>Assessment Dokter</h1>
+<div class="form-card">
 
     <h3>Data Perawat</h3>
 
@@ -131,72 +129,75 @@ $medicine_query = mysqli_query(
 
         <h3>Resep Obat</h3>
 
-        <table border="1" cellpadding="10" id="medicine-table">
+        <div class="table-container">
 
-            <tr>
-                <th>Obat</th>
-                <th>Dosis</th>
-                <th>Frekuensi</th>
-                <th>Durasi</th>
-                <th>Catatan</th>
-            </tr>
+            <table id="medicine-table">
 
-            <tr>
+                <tr>
+                    <th>Obat</th>
+                    <th>Dosis</th>
+                    <th>Frekuensi</th>
+                    <th>Durasi</th>
+                    <th>Catatan</th>
+                </tr>
 
-                <td>
+                <tr>
 
-                    <select name="medicine_id[]">
+                    <td>
 
-                        <option value="">
-                            -- Pilih Obat --
-                        </option>
+                        <select name="medicine_id[]">
 
-                        <?php
-
-                        $medicine_query = mysqli_query(
-                            $conn,
-                            "SELECT * FROM medicines"
-                        );
-
-                        while ($medicine = mysqli_fetch_assoc($medicine_query)) {
-
-                            ?>
-
-                            <option value="<?= $medicine['id']; ?>">
-
-                                <?= $medicine['medicine_name']; ?>
-
+                            <option value="">
+                                -- Pilih Obat --
                             </option>
 
-                        <?php } ?>
+                            <?php
 
-                    </select>
+                            $medicine_query = mysqli_query(
+                                $conn,
+                                "SELECT * FROM medicines"
+                            );
 
-                </td>
+                            while ($medicine = mysqli_fetch_assoc($medicine_query)) {
 
-                <td>
-                    <input type="text" name="dosage[]">
-                </td>
+                                ?>
 
-                <td>
-                    <input type="text" name="frequency[]">
-                </td>
+                                <option value="<?= $medicine['id']; ?>">
 
-                <td>
-                    <input type="text" name="duration[]">
-                </td>
+                                    <?= $medicine['medicine_name']; ?>
 
-                <td>
-                    <input type="text" name="medicine_notes[]">
-                </td>
+                                </option>
 
-            </tr>
+                            <?php } ?>
 
-        </table>
+                        </select>
+
+                    </td>
+
+                    <td>
+                        <input type="text" name="dosage[]">
+                    </td>
+
+                    <td>
+                        <input type="text" name="frequency[]">
+                    </td>
+
+                    <td>
+                        <input type="text" name="duration[]">
+                    </td>
+
+                    <td>
+                        <input type="text" name="medicine_notes[]">
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
 
         <br>
 
-        <button type="button" onclick="addMedicineRow()">
+        <button type="button" class="action-btn" onclick="addMedicineRow()">
 
             Tambah Obat
 
@@ -265,7 +266,11 @@ $medicine_query = mysqli_query(
 
         </script>
 
-        <label>Status Tindakan</label><br>
+        <label style="display:block; margin-top:20px;">
+
+            Status Tindakan
+
+        </label>
 
         <select name="treatment_status">
 
@@ -310,7 +315,10 @@ $medicine_query = mysqli_query(
         </button>
 
     </form>
+</div>
 
-</body>
+<?php
 
-</html>
+include '../../templates/footer.php';
+
+?>

@@ -32,18 +32,57 @@ $query = mysqli_query(
     WHERE visit_status = 'waiting_nurse'"
 );
 
+$waiting_nurse = mysqli_num_rows(
+
+    mysqli_query(
+
+        $conn,
+
+        "SELECT * FROM visits
+
+        WHERE visit_status = 'waiting_nurse'"
+    )
+);
+
+$waiting_doctor = mysqli_num_rows(
+
+    mysqli_query(
+
+        $conn,
+
+        "SELECT * FROM visits
+
+        WHERE visit_status = 'waiting_doctor'"
+    )
+);
+
+include '../../templates/header.php';
+
+include '../../templates/navbar.php';
+
 ?>
 
-<!DOCTYPE html>
-<html>
+<h1>Dashboard Perawat</h1>
+<div class="stats-grid">
 
-<head>
-    <title>Dashboard Perawat</title>
-</head>
+    <div class="stat-card orange">
 
-<body>
+        <h2><?= $waiting_nurse; ?></h2>
 
-    <h1>Dashboard Perawat</h1>
+        <p>Waiting Nurse</p>
+
+    </div>
+
+    <div class="stat-card purple">
+
+        <h2><?= $waiting_doctor; ?></h2>
+
+        <p>Waiting Doctor</p>
+
+    </div>
+
+</div>
+<div class="form-card">
 
     <h3>
 
@@ -59,51 +98,50 @@ $query = mysqli_query(
 
     </p>
 
-    <a href="../../auth/logout.php">
-
-        Logout
-
-    </a>
-
     <hr>
 
-    <table border="1" cellpadding="10">
+    <divd class="table-container">
+</div>
+<table>
+
+    <tr>
+        <th>No Antrean</th>
+        <th>Nama Pasien</th>
+        <th>Tanggal Visit</th>
+        <th>Status</th>
+        <th>Aksi</th>
+    </tr>
+
+    <?php while ($visit = mysqli_fetch_assoc($query)) { ?>
 
         <tr>
-            <th>No Antrean</th>
-            <th>Nama Pasien</th>
-            <th>Tanggal Visit</th>
-            <th>Status</th>
-            <th>Aksi</th>
+            <td><?= $visit['queue_number']; ?></td>
+
+            <td><?= $visit['full_name']; ?></td>
+
+            <td><?= $visit['visit_date']; ?></td>
+
+            <td><?= $visit['visit_status']; ?></td>
+
+            <td>
+
+                <a href="assessment.php?id=<?= $visit['id']; ?>">
+
+                    Assessment
+
+                </a>
+
+            </td>
+
         </tr>
 
-        <?php while ($visit = mysqli_fetch_assoc($query)) { ?>
+    <?php } ?>
 
-            <tr>
-                <td><?= $visit['queue_number']; ?></td>
+</table>
+</divd>
 
-                <td><?= $visit['full_name']; ?></td>
+<?php
 
-                <td><?= $visit['visit_date']; ?></td>
+include '../../templates/footer.php';
 
-                <td><?= $visit['visit_status']; ?></td>
-
-                <td>
-
-                    <a href="assessment.php?id=<?= $visit['id']; ?>">
-
-                        Assessment
-
-                    </a>
-
-                </td>
-
-            </tr>
-
-        <?php } ?>
-
-    </table>
-
-</body>
-
-</html>
+?>
