@@ -53,9 +53,9 @@ include '../../templates/navbar.php';
 ?>
 
 
-<a href="patients.php">
+<a href="patients.php" class="action-btn gray-btn">
 
-    ← Kembali ke Pasien
+    Kembali ke Pasien
 
 </a>
 
@@ -190,7 +190,7 @@ include '../../templates/navbar.php';
 
                 <td>
 
-                    <a href="visit_detail.php?id=<?= $visit['id']; ?>">
+                    <a href="visit_detail.php?id=<?= $visit['id']; ?>" class="action-btn">
 
                         Lihat Detail
 
