@@ -22,12 +22,6 @@
 
             </a>
 
-            <a href="../../modules/admin/users.php">
-
-                Kelola User
-
-            </a>
-
         <?php } ?>
 
         <?php if ($_SESSION['role'] == 'nurse') { ?>
@@ -45,16 +39,6 @@
             <a href="../../modules/doctor/dashboard.php">
 
                 Dashboard Doctor
-
-            </a>
-
-        <?php } ?>
-
-        <?php if ($_SESSION['role'] == 'inpatient') { ?>
-
-            <a href="../../modules/inpatient/dashboard.php">
-
-                Dashboard
 
             </a>
 
