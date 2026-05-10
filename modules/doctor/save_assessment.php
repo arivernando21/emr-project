@@ -249,7 +249,11 @@ if ($query) {
         );
     }
 
-    echo "Assessment dokter berhasil";
+    header(
+        "Location: dashboard.php?success=1"
+    );
+
+    exit;
 
 } else {
 

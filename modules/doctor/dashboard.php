@@ -73,6 +73,64 @@ include '../../templates/navbar.php';
 
 ?>
 
+<?php if (isset($_GET['success'])) { ?>
+
+    <div
+
+    id="success-popup"
+
+    style="
+
+    position: fixed;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(46, 204, 113, 0.92);
+
+    color: white;
+
+    padding: 22px 40px;
+
+    border-radius: 14px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    z-index: 999999;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+    ">
+
+        Assessment dokter berhasil disimpan
+
+    </div>
+
+    <script>
+
+        setTimeout(function() {
+
+            const popup =
+            document.getElementById(
+                'success-popup'
+            );
+
+            if (popup) {
+
+                popup.remove();
+            }
+
+        }, 2000);
+
+    </script>
+
+<?php } ?>
+
 <h1>Dashboard Dokter</h1>
 <div class="stats-grid">
 
