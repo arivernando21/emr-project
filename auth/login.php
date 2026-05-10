@@ -42,6 +42,10 @@ if (isset($_POST['login'])) {
             } elseif ($user['role'] == 'doctor') {
 
                 header("Location: ../modules/doctor/dashboard.php");
+                
+            } elseif ($user['role'] == 'lab') {
+
+                header("Location: ../modules/lab/dashboard.php");
 
             } elseif ($user['role'] == 'pharmacy') {
 

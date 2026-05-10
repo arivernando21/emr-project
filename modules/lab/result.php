@@ -1,25 +1,33 @@
 <?php
 
 include '../../config/database.php';
+include '../../templates/header.php';
+include '../../templates/navbar.php';
 
 $lab_order_id = $_GET['id'];
 
 ?>
 
-<!DOCTYPE html>
-<html>
+<h1>Input Hasil Lab</h1>
 
-<head>
-    <title>Hasil Lab</title>
-</head>
+<div class="form-card">
 
-<body>
+    <form action="save_result.php"
+    method="POST"
+    enctype="multipart/form-data">
 
-    <h1>Input Hasil Lab</h1>
+        <input type="hidden"
+        name="lab_order_id"
+        value="<?= $lab_order_id; ?>">
 
-    <form action="save_result.php" method="POST" enctype="multipart/form-data">
+        <label>Upload Hasil Lab</label>
 
-        <input type="hidden" name="lab_order_id" value="<?= $lab_order_id; ?>">
+        <input type="file"
+        name="result_file"
+        accept="image/*"
+        required>
+
+        <br><br>
 
         <button type="submit">
 
@@ -29,6 +37,10 @@ $lab_order_id = $_GET['id'];
 
     </form>
 
-</body>
+</div>
 
-</html>
+<?php
+
+include '../../templates/footer.php';
+
+?>

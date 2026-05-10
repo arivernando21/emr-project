@@ -8,33 +8,29 @@ $query = mysqli_query(
     $conn,
 
     "SELECT lab_orders.*,
-patients.full_name
+    patients.full_name
 
-FROM lab_orders
+    FROM lab_orders
 
-JOIN visits
-ON lab_orders.visit_id = visits.id
+    JOIN visits
+    ON lab_orders.visit_id = visits.id
 
-JOIN patients
-ON visits.patient_id = patients.id
+    JOIN patients
+    ON visits.patient_id = patients.id
 
-WHERE order_status = 'pending'"
+    WHERE order_status = 'pending'"
 );
+
+include '../../templates/header.php';
+include '../../templates/navbar.php';
 
 ?>
 
-<!DOCTYPE html>
-<html>
+<h1>Dashboard Lab</h1>
 
-<head>
-    <title>Dashboard Lab</title>
-</head>
+<div class="table-container">
 
-<body>
-
-    <h1>Dashboard Lab</h1>
-
-    <table border="1" cellpadding="10">
+    <table>
 
         <tr>
 
@@ -54,7 +50,7 @@ WHERE order_status = 'pending'"
 
                 <td>
 
-                    <a href="result.php?id=<?= $lab['id']; ?>">
+                    <a href="result.php?id=<?= $lab['id']; ?>" class="action-btn table-btn">
 
                         Input Hasil
 
@@ -68,6 +64,10 @@ WHERE order_status = 'pending'"
 
     </table>
 
-</body>
+</div>
 
-</html>
+<?php
+
+include '../../templates/footer.php';
+
+?>

@@ -346,15 +346,17 @@ include '../../templates/navbar.php';
 
     <?php while ($lab = mysqli_fetch_assoc($lab_query)) { ?>
 
-        <p>
-            <b>Hasil:</b>
-            <?= $lab['result_value']; ?>
-        </p>
+        <?php if (!empty($lab['result_file'])) { ?>
 
-        <p>
-            <b>Catatan:</b>
-            <?= $lab['result_notes']; ?>
-        </p>
+            <img src="../../assets/uploads/lab_results/<?= $lab['result_file']; ?>" style="
+        max-width:400px;
+        border-radius:10px;
+        margin-top:10px;
+        margin-bottom:20px;
+        border:1px solid #ccc;
+        ">
+
+        <?php } ?>
 
         <hr>
 
@@ -425,24 +427,24 @@ include '../../templates/navbar.php';
 
 <script>
 
-function printPrescription() {
+    function printPrescription() {
 
-    const iframe = document.createElement('iframe');
+        const iframe = document.createElement('iframe');
 
-    iframe.style.display = 'none';
+        iframe.style.display = 'none';
 
-    iframe.src =
-        'print_prescription.php?id=<?= $visit['id']; ?>';
+        iframe.src =
+            'print_prescription.php?id=<?= $visit['id']; ?>';
 
-    document.body.appendChild(iframe);
+        document.body.appendChild(iframe);
 
-    iframe.onload = function() {
+        iframe.onload = function () {
 
-        iframe.contentWindow.focus();
+            iframe.contentWindow.focus();
 
-        iframe.contentWindow.print();
-    };
-}
+            iframe.contentWindow.print();
+        };
+    }
 
 </script>
 
