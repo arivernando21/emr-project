@@ -203,6 +203,14 @@ include '../../templates/navbar.php';
 
     </div>
 
+    <div class="card red">
+
+        <?= $waiting_lab['total']; ?>
+
+        <small>Waiting Lab</small>
+
+    </div>
+
     <div class="card blue">
 
         <?= $waiting_pharmacy['total']; ?>
@@ -219,7 +227,7 @@ include '../../templates/navbar.php';
 
     </div>
 
-    <div class="card gray">
+    <div class="card green">
 
         <?= $completed['total']; ?>
 
