@@ -4,6 +4,27 @@ include '../../config/database.php';
 
 $visit_id = $_GET['id'];
 
+$patient_query = mysqli_query(
+    $conn,
+    "SELECT 
+        patients.medical_record_number,
+        patients.nik,
+        patients.full_name,
+        patients.gender,
+        patients.birth_date,
+        patients.phone,
+        patients.address
+
+    FROM visits
+
+    JOIN patients
+    ON visits.patient_id = patients.id
+
+    WHERE visits.id = '$visit_id'"
+);
+
+$patient = mysqli_fetch_assoc($patient_query);
+
 $poli_query = mysqli_query(
     $conn,
     "SELECT * FROM poli"
@@ -27,96 +48,136 @@ include '../../templates/navbar.php';
 
 
 <h1>Assessment Perawat</h1>
+
 <div class="form-card">
 
-    <form action="save_assessment.php" method="POST">
+    <h2>Data Pasien</h2>
 
-        <input type="hidden" name="visit_id" value="<?= $visit_id; ?>">
+    <p>
+        <strong>No Rekam Medis:</strong>
+        <?= $patient['medical_record_number']; ?>
+    </p>
 
-        <h3>Vital Sign</h3>
+    <p>
+        <strong>NIK:</strong>
+        <?= $patient['nik']; ?>
+    </p>
 
-        <label>Tekanan Darah</label><br>
-        <input type="text" name="blood_pressure" required><br><br>
+    <p>
+        <strong>Nama Lengkap:</strong>
+        <?= $patient['full_name']; ?>
+    </p>
 
-        <label>Suhu</label><br>
-        <input type="text" name="temperature" required><br><br>
+    <p>
+        <strong>Jenis Kelamin:</strong>
+        <?= $patient['gender']; ?>
+    </p>
 
-        <label>Nadi</label><br>
-        <input type="text" name="pulse" required><br><br>
+    <p>
+        <strong>Tanggal Lahir:</strong>
+        <?= $patient['birth_date']; ?>
+    </p>
 
-        <label>Respirasi</label><br>
-        <input type="text" name="respiration" required><br><br>
+    <p>
+        <strong>No HP:</strong>
+        <?= $patient['phone']; ?>
+    </p>
 
-        <h3>SOAP</h3>
+    <p>
+        <strong>Alamat:</strong>
+        <?= $patient['address']; ?>
+    </p>
 
-        <label>Subjective</label><br>
-        <textarea name="subjective" required></textarea><br><br>
+    <hr><br>
 
-        <label>Objective</label><br>
-        <textarea name="objective" required></textarea><br><br>
+        <form action="save_assessment.php" method="POST">
 
-        <label>Assessment</label><br>
-        <textarea name="assessment" required></textarea><br><br>
+            <input type="hidden" name="visit_id" value="<?= $visit_id; ?>">
 
-        <label>Plan</label><br>
-        <textarea name="plan" required></textarea><br><br>
+            <h3>Vital Sign</h3>
 
-        <h3>Triase</h3>
+            <label>Tekanan Darah</label><br>
+            <input type="text" name="blood_pressure" required><br><br>
 
-        <select name="triage_level">
+            <label>Suhu</label><br>
+            <input type="text" name="temperature" required><br><br>
 
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-            <option value="emergency">Emergency</option>
+            <label>Nadi</label><br>
+            <input type="text" name="pulse" required><br><br>
 
-        </select>
+            <label>Respirasi</label><br>
+            <input type="text" name="respiration" required><br><br>
 
-        <br><br>
+            <h3>SOAP</h3>
 
-        <h3>Poli Tujuan</h3>
+            <label>Subjective</label><br>
+            <textarea name="subjective" required></textarea><br><br>
 
-        <select name="assigned_poli_id">
+            <label>Objective</label><br>
+            <textarea name="objective" required></textarea><br><br>
 
-            <?php while ($poli = mysqli_fetch_assoc($poli_query)) { ?>
+            <label>Assessment</label><br>
+            <textarea name="assessment" required></textarea><br><br>
 
-                <option value="<?= $poli['id']; ?>">
+            <label>Plan</label><br>
+            <textarea name="plan" required></textarea><br><br>
 
-                    <?= $poli['poli_name']; ?>
+            <h3>Triase</h3>
 
-                </option>
+            <select name="triage_level">
 
-            <?php } ?>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="emergency">Emergency</option>
 
-        </select>
+            </select>
 
-        <br><br>
+            <br><br>
 
-        <h3>Dokter Tujuan</h3>
+            <h3>Poli Tujuan</h3>
 
-        <select name="assigned_doctor_id">
+            <select name="assigned_poli_id">
 
-            <?php while ($doctor = mysqli_fetch_assoc($doctor_query)) { ?>
+                <?php while ($poli = mysqli_fetch_assoc($poli_query)) { ?>
 
-                <option value="<?= $doctor['id']; ?>">
+                    <option value="<?= $poli['id']; ?>">
 
-                    <?= $doctor['name']; ?>
+                        <?= $poli['poli_name']; ?>
 
-                </option>
+                    </option>
 
-            <?php } ?>
+                <?php } ?>
 
-        </select>
+            </select>
 
-        <br><br>
+            <br><br>
 
-        <button type="submit">
+            <h3>Dokter Tujuan</h3>
 
-            Simpan Assessment
+            <select name="assigned_doctor_id">
 
-        </button>
+                <?php while ($doctor = mysqli_fetch_assoc($doctor_query)) { ?>
 
-    </form>
+                    <option value="<?= $doctor['id']; ?>">
+
+                        <?= $doctor['name']; ?>
+
+                    </option>
+
+                <?php } ?>
+
+            </select>
+
+            <br><br>
+
+            <button type="submit">
+
+                Simpan Assessment
+
+            </button>
+
+        </form>
 </div>
 
 <?php

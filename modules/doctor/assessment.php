@@ -55,6 +55,37 @@ include '../../templates/navbar.php';
     <p><b>Pasien:</b>
         <?= $nurse['full_name']; ?></p>
 
+    <h3>Vital Sign Perawat</h3>
+
+    <p>
+        <b>Tekanan Darah:</b>
+        <?= $nurse['blood_pressure']; ?>
+    </p>
+
+    <p>
+        <b>Suhu:</b>
+        <?= $nurse['temperature']; ?>
+    </p>
+
+    <p>
+        <b>Nadi:</b>
+        <?= $nurse['pulse']; ?>
+    </p>
+
+    <p>
+        <b>Respirasi:</b>
+        <?= $nurse['respiration']; ?>
+    </p>
+
+    <p>
+        <b>Triase:</b>
+        <?= ucfirst($nurse['triage_level']); ?>
+    </p>
+
+    <hr>
+
+    <h3>SOAP Perawat</h3>
+
     <p><b>Subjective:</b>
         <?= $nurse['subjective']; ?></p>
 

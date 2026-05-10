@@ -618,3 +618,12 @@ button:hover {
         translate(-50%, -50%);
     }
 }
+
+.form-card p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.form-card h2 {
+    margin-bottom: 20px;
+}
