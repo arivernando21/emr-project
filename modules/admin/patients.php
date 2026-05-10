@@ -37,17 +37,17 @@ include '../../templates/navbar.php';
 
 ?>
 
-<h1>Daftar Pasien</h1>
-
 <?php if (isset($_GET['success'])) { ?>
 
-    <p class="alert-success" id="success-alert">
+    <div id="toast-success">
 
-        Pasien berhasil ditambahkan
+        Visit berhasil dibuat
 
-    </p>
+    </div>
 
 <?php } ?>
+
+<h1>Daftar Pasien</h1>
 
 <form method="GET" style="display:flex;
                                     gap:10px;
@@ -133,6 +133,23 @@ include '../../templates/navbar.php';
 </script>
 </div>
 
+<script>
+
+    setTimeout(() => {
+
+        const toast =
+            document.getElementById(
+                'toast-success'
+            );
+
+        if (toast) {
+
+            toast.style.display = 'none';
+        }
+
+    }, 2000);
+
+</script>
 <?php
 
 include '../../templates/footer.php';

@@ -58,7 +58,8 @@ if ($query) {
         'Membuat visit baru pasien ID ' . $patient_id
     );
 
-    echo "Visit berhasil dibuat";
+    header("Location: patients.php?success=visit_created");
+    exit;
 
 } else {
 
