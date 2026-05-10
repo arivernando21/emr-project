@@ -292,18 +292,6 @@ include '../../templates/navbar.php';
 
             </option>
 
-            <option value="observation">
-
-                Observasi
-
-            </option>
-
-            <option value="referred">
-
-                Rujuk
-
-            </option>
-
         </select>
 
         <br><br>
