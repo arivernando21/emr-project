@@ -61,6 +61,15 @@ include '../../templates/header.php';
 include '../../templates/navbar.php';
 
 ?>
+<?php if (isset($_GET['success'])) { ?>
+
+    <div id="toast-success">
+
+        Assessment berhasil disimpan
+
+    </div>
+
+<?php } ?>
 
 <h1>Dashboard Perawat</h1>
 <div class="stats-grid">
@@ -158,7 +167,7 @@ include '../../templates/navbar.php';
 
             <td>
 
-                <a href="assessment.php?id=<?= $visit['id']; ?>">
+                <a href="assessment.php?id=<?= $visit['id']; ?>" class="action-btn">
 
                     Assessment
 
@@ -172,6 +181,24 @@ include '../../templates/navbar.php';
 
 </table>
 </divd>
+
+<script>
+
+setTimeout(() => {
+
+    const toast =
+        document.getElementById(
+            'toast-success'
+        );
+
+    if (toast) {
+
+        toast.style.display = 'none';
+    }
+
+}, 2000);
+
+</script>
 
 <?php
 

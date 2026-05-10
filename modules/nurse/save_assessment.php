@@ -85,6 +85,8 @@ if ($query) {
         WHERE id = '$visit_id'"
     );
 
-    echo "Assessment berhasil disimpan";
+    header("Location: dashboard.php?success=assessment_saved");
+
+    exit;
 }
 ?>
