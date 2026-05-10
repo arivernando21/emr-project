@@ -41,25 +41,32 @@ include '../../templates/navbar.php';
 
         <label>Nama</label>
 
-        <input type="text" name="name" required>
+        <input type="text"
+        name="name"
+        required>
 
         <br><br>
 
         <label>Email</label>
 
-        <input type="email" name="email" required>
+        <input type="email"
+        name="email"
+        required>
 
         <br><br>
 
         <label>Password</label>
 
-        <input type="password" name="password" required>
+        <input type="password"
+        name="password"
+        required>
 
         <br><br>
 
         <label>Role</label>
 
-        <select name="role" id="role-select">
+        <select name="role"
+        id="role-select">
 
             <option value="nurse" selected>
 
@@ -77,7 +84,8 @@ include '../../templates/navbar.php';
 
         <br><br>
 
-        <div id="specialization-box" style="display:none;">
+        <div id="specialization-box"
+        style="display:none;">
 
             <label>Spesialisasi Dokter</label>
 
@@ -149,23 +157,23 @@ include '../../templates/navbar.php';
 
 <script>
 
-    const roleSelect =
-        document.getElementById('role-select');
+const roleSelect =
+    document.getElementById('role-select');
 
-    const specializationBox =
-        document.getElementById('specialization-box');
+const specializationBox =
+    document.getElementById('specialization-box');
 
-    roleSelect.addEventListener('change', () => {
+roleSelect.addEventListener('change', () => {
 
-        if (roleSelect.value == 'doctor') {
+    if (roleSelect.value == 'doctor') {
 
-            specializationBox.style.display = 'block';
+        specializationBox.style.display = 'block';
 
-        } else {
+    } else {
 
-            specializationBox.style.display = 'none';
-        }
-    });
+        specializationBox.style.display = 'none';
+    }
+});
 
 </script>
 
