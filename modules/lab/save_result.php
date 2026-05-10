@@ -1,5 +1,6 @@
 <?php
 
+include '../../helpers/log_activity.php';
 session_start();
 
 include '../../config/database.php';
@@ -78,8 +79,17 @@ if ($query) {
 
         WHERE id = '" . $visit['visit_id'] . "'"
     );
+    logActivity(
+
+        $conn,
+
+        $_SESSION['user_id'],
+
+        'Mengupload hasil lab order ID ' . $lab_order_id
+    );
 
     $_SESSION['success'] =
+
         "Hasil lab berhasil disimpan";
 
     header("Location: dashboard.php");
