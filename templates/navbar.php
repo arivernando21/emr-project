@@ -11,53 +11,45 @@ $current_page =
 
         <?php if ($_SESSION['role'] == 'admin') { ?>
 
-            <a href="../../modules/admin/dashboard.php"
-
-            class="<?= $current_page == 'dashboard.php'
-            ? 'active'
-            : ''; ?>">
+            <a href="../../modules/admin/dashboard.php" class="<?= $current_page == 'dashboard.php'
+                ? 'active'
+                : ''; ?>">
 
                 Dashboard
 
             </a>
 
-            <a href="../../modules/admin/patients.php"
+            <a href="../../modules/admin/patients.php" class="<?= in_array(
 
-            class="<?= in_array(
+                $current_page,
 
-            $current_page,
-
-            [
-                'patients.php',
-                'add_patient.php',
-                'patient_history.php',
-                'visit_detail.php'
-            ]
+                [
+                    'patients.php',
+                    'add_patient.php',
+                    'patient_history.php',
+                    'visit_detail.php'
+                ]
 
             )
 
-            ? 'active'
-            : ''; ?>">
+                ? 'active'
+                : ''; ?>">
 
                 Kelola Pasien
 
             </a>
 
-            <a href="../../modules/admin/activity_logs.php"
-
-            class="<?= $current_page == 'activity_logs.php'
-            ? 'active'
-            : ''; ?>">
+            <a href="../../modules/admin/activity_logs.php" class="<?= $current_page == 'activity_logs.php'
+                ? 'active'
+                : ''; ?>">
 
                 Activity Logs
 
             </a>
 
-            <a href="../../modules/admin/users.php"
-
-            class="<?= $current_page == 'users.php'
-            ? 'active'
-            : ''; ?>">
+            <a href="../../modules/admin/users.php" class="<?= $current_page == 'users.php'
+                ? 'active'
+                : ''; ?>">
 
                 Kelola User
 
@@ -67,23 +59,40 @@ $current_page =
 
         <?php if ($_SESSION['role'] == 'nurse') { ?>
 
-            <a href="../../modules/nurse/dashboard.php"
+            <a href="../../modules/nurse/dashboard.php" class="<?= in_array(
 
-            class="<?= in_array(
+                $current_page,
 
-            $current_page,
-
-            [
-                'dashboard.php',
-                'assessment.php'
-            ]
+                [
+                    'dashboard.php',
+                    'assessment.php'
+                ]
 
             )
 
-            ? 'active'
-            : ''; ?>">
+                ? 'active'
+                : ''; ?>">
 
                 Dashboard Nurse
+
+            </a>
+
+            <a href="../../modules/nurse/patients.php" class="<?= in_array(
+
+                $current_page,
+
+                [
+                    'patients.php',
+                    'patient_history.php',
+                    'visit_detail.php'
+                ]
+
+            )
+
+                ? 'active'
+                : ''; ?>">
+
+                Riwayat Medis
 
             </a>
 
@@ -91,24 +100,41 @@ $current_page =
 
         <?php if ($_SESSION['role'] == 'doctor') { ?>
 
-            <a href="../../modules/doctor/dashboard.php"
+            <a href="../../modules/doctor/dashboard.php" class="<?= in_array(
 
-            class="<?= in_array(
+                $current_page,
 
-            $current_page,
-
-            [
-                'dashboard.php',
-                'assessment.php',
-                'lab_review.php'
-            ]
+                [
+                    'dashboard.php',
+                    'assessment.php',
+                    'lab_review.php'
+                ]
 
             )
 
-            ? 'active'
-            : ''; ?>">
+                ? 'active'
+                : ''; ?>">
 
                 Dashboard Doctor
+
+            </a>
+
+            <a href="../../modules/doctor/patients.php" class="<?= in_array(
+
+                $current_page,
+
+                [
+                    'patients.php',
+                    'patient_history.php',
+                    'visit_detail.php'
+                ]
+
+            )
+
+                ? 'active'
+                : ''; ?>">
+
+                Riwayat Medis
 
             </a>
 
@@ -116,11 +142,9 @@ $current_page =
 
         <?php if ($_SESSION['role'] == 'inpatient') { ?>
 
-            <a href="../../modules/inpatient/dashboard.php"
-
-            class="<?= $current_page == 'dashboard.php'
-            ? 'active'
-            : ''; ?>">
+            <a href="../../modules/inpatient/dashboard.php" class="<?= $current_page == 'dashboard.php'
+                ? 'active'
+                : ''; ?>">
 
                 Dashboard
 
