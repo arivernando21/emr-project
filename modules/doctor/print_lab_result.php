@@ -178,7 +178,7 @@ $first = mysqli_fetch_assoc($lab_query);
 
             <div class="header-center">
 
-                <h2>PEMERINTAH KABUPATEN BANDUNG</h2>
+                <h2>PEMERINTAH KABUPATEN OGAN ILIR</h2>
 
                 <h3>DINAS KESEHATAN</h3>
 

@@ -76,12 +76,23 @@ $query = mysqli_query(
 
                     <td>
 
-                        <a href="complete_visit.php?id=<?= $pharmacy['visit_id']; ?>"
-                            class="action-btn table-btn green-btn">
+                        <div class="action-group">
 
-                            Obat Diserahkan
+                            <a href="complete_visit.php?id=<?= $pharmacy['visit_id']; ?>"
+                                class="action-btn table-btn green-btn">
 
-                        </a>
+                                Obat Diserahkan
+
+                            </a>
+
+                            <button type="button" class="action-btn table-btn"
+                                onclick="printPrescription(<?= $pharmacy['visit_id']; ?>)">
+
+                                Cetak Resep
+
+                            </button>
+
+                        </div>
 
                     </td>
 
@@ -91,6 +102,30 @@ $query = mysqli_query(
 
         </table>
     </div>
+
+    <script>
+
+        function printPrescription(visitId) {
+
+            const iframe =
+                document.createElement('iframe');
+
+            iframe.style.display = 'none';
+
+            iframe.src =
+                'print_prescription.php?id=' + visitId;
+
+            document.body.appendChild(iframe);
+
+            iframe.onload = function () {
+
+                iframe.contentWindow.focus();
+
+                iframe.contentWindow.print();
+            };
+        }
+
+    </script>
 
     <?php
 
