@@ -1,48 +1,66 @@
 <?php
 
 include '../../helpers/log_activity.php';
+
 session_start();
 
 include '../../config/database.php';
 
 $lab_order_id = $_POST['lab_order_id'];
 
-$file_name = '';
+$result_numbers = $_POST['result_number'];
 
-if (!empty($_FILES['result_file']['name'])) {
+$lab_service_ids = $_POST['lab_service_id'];
 
-    $file_name =
-        time() . '_' .
-        $_FILES['result_file']['name'];
+$normal_ranges = $_POST['normal_range'];
 
-    move_uploaded_file(
+$result_units = $_POST['result_unit'];
 
-        $_FILES['result_file']['tmp_name'],
-
-        '../../assets/uploads/lab_results/' . $file_name
-    );
-}
-
-$query = mysqli_query(
+$get_service = mysqli_query(
 
     $conn,
 
-    "INSERT INTO lab_results (
+    "SELECT *
 
-    lab_order_id,
-    result_file
+    FROM lab_services
 
-    )
-
-    VALUES (
-
-    '$lab_order_id',
-    '$file_name'
-
-    )"
+    WHERE id = '$lab_service_id'"
 );
 
-if ($query) {
+$service = mysqli_fetch_assoc($get_service);
+
+for ($i = 0; $i < count($lab_service_ids); $i++) {
+
+    if (!empty($result_numbers[$i])) {
+
+        mysqli_query(
+
+            $conn,
+
+            "INSERT INTO lab_results (
+
+            lab_order_id,
+            lab_service_id,
+            result_number,
+            result_unit,
+            normal_range
+
+            )
+
+            VALUES (
+
+            '$lab_order_id',
+            '" . $lab_service_ids[$i] . "',
+            '" . $result_numbers[$i] . "',
+            '" . $result_units[$i] . "',
+            '" . $normal_ranges[$i] . "'
+
+            )"
+        );
+    }
+}
+
+if (true) {
 
     mysqli_query(
 
@@ -79,17 +97,18 @@ if ($query) {
 
         WHERE id = '" . $visit['visit_id'] . "'"
     );
+
     logActivity(
 
         $conn,
 
         $_SESSION['user_id'],
 
-        'Mengupload hasil lab order ID ' . $lab_order_id
+        'Menginput hasil lab order ID ' .
+        $lab_order_id
     );
 
     $_SESSION['success'] =
-
         "Hasil lab berhasil disimpan";
 
     header("Location: dashboard.php");
@@ -98,6 +117,6 @@ if ($query) {
 
 } else {
 
-    echo "Gagal menyimpan";
+    echo "Gagal menyimpan hasil lab";
 }
 ?>

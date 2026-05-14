@@ -50,21 +50,24 @@ $lab_query = mysqli_query(
     $conn,
 
     "SELECT lab_results.*,
-    lab_orders.order_notes
+
+    lab_services.service_name,
+    lab_services.normal_value,
+    lab_services.unit
 
     FROM lab_results
 
+    LEFT JOIN lab_services
+    ON lab_results.lab_service_id =
+    lab_services.id
+
     JOIN lab_orders
-    ON lab_results.lab_order_id = lab_orders.id
+    ON lab_results.lab_order_id =
+    lab_orders.id
 
-    WHERE lab_orders.visit_id = '$visit_id'
-
-    ORDER BY lab_results.id DESC
-
-    LIMIT 1"
+    WHERE lab_orders.visit_id = '$visit_id'"
 );
 
-$lab = mysqli_fetch_assoc($lab_query);
 
 $medicine_query = mysqli_query(
     $conn,
@@ -125,15 +128,11 @@ include '../../templates/navbar.php';
 
     <h3>Hasil Lab</h3>
 
-    <img src="../../assets/uploads/lab_results/<?= $lab['result_file']; ?>" style="
+    <a href="print_lab_result.php?id=<?= $visit_id; ?>" target="_blank" class="action-btn">
 
-width:100%;
-max-width:700px;
-border-radius:10px;
-margin-top:15px;
-border:1px solid #ccc;
+        Lihat Hasil Lab
 
-">
+    </a>
 
     <hr>
 
