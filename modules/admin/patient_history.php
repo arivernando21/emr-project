@@ -2,22 +2,49 @@
 
 include '../../config/database.php';
 
-$patient_id = $_GET['id'];
+$patient_id = intval($_GET['id']);
 
 $status_filter = '';
 
-if (isset($_GET['status'])) {
+$allowed_status = [
+    'waiting_nurse',
+    'waiting_doctor',
+    'waiting_lab',
+    'waiting_pharmacy',
+    'inpatient',
+    'completed'
+];
 
-    $status_filter = $_GET['status'];
+if (
+    isset($_GET['status']) &&
+    in_array(
+        $_GET['status'],
+        $allowed_status
+    )
+) {
+
+    $status_filter =
+        $_GET['status'];
 }
 
-$patient_query = mysqli_query(
-
+$stmt_patient = mysqli_prepare(
     $conn,
-
     "SELECT * FROM patients
-WHERE id = '$patient_id'"
+    WHERE id = ?"
 );
+
+mysqli_stmt_bind_param(
+    $stmt_patient,
+    "i",
+    $patient_id
+);
+
+mysqli_stmt_execute($stmt_patient);
+
+$patient_query =
+    mysqli_stmt_get_result(
+        $stmt_patient
+    );
 
 $patient = mysqli_fetch_assoc($patient_query);
 

@@ -7,10 +7,20 @@ include '../config/database.php';
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$query = mysqli_query(
+$stmt = mysqli_prepare(
     $conn,
-    "SELECT * FROM users WHERE email='$email'"
+    "SELECT * FROM users WHERE email = ?"
 );
+
+mysqli_stmt_bind_param(
+    $stmt,
+    "s",
+    $email
+);
+
+mysqli_stmt_execute($stmt);
+
+$query = mysqli_stmt_get_result($stmt);
 
 $user = mysqli_fetch_assoc($query);
 
@@ -24,21 +34,13 @@ if ($user) {
 
         if ($user['role'] == 'admin') {
             header("Location: ../modules/admin/dashboard.php");
-        }
-
-        elseif ($user['role'] == 'doctor') {
+        } elseif ($user['role'] == 'doctor') {
             header("Location: ../modules/doctor/dashboard.php");
-        }
-
-        elseif ($user['role'] == 'nurse') {
+        } elseif ($user['role'] == 'nurse') {
             header("Location: ../modules/nurse/dashboard.php");
-        }
-
-        elseif ($user['role'] == 'lab') {
+        } elseif ($user['role'] == 'lab') {
             header("Location: ../modules/lab/dashboard.php");
-        }
-
-        elseif ($user['role'] == 'pharmacy') {
+        } elseif ($user['role'] == 'pharmacy') {
             header("Location: ../modules/pharmacy/dashboard.php");
         }
 

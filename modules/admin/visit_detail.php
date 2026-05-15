@@ -2,22 +2,37 @@
 
 include '../../config/database.php';
 
-$visit_id = $_GET['id'];
+$visit_id = intval($_GET['id']);
 
-$visit_query = mysqli_query(
+$stmt_visit = mysqli_prepare(
 
     $conn,
 
     "SELECT visits.*,
-patients.full_name
+    patients.full_name
 
-FROM visits
+    FROM visits
 
-JOIN patients
-ON visits.patient_id = patients.id
+    JOIN patients
+    ON visits.patient_id = patients.id
 
-WHERE visits.id = '$visit_id'"
+    WHERE visits.id = ?"
 );
+
+mysqli_stmt_bind_param(
+    $stmt_visit,
+    "i",
+    $visit_id
+);
+
+mysqli_stmt_execute(
+    $stmt_visit
+);
+
+$visit_query =
+    mysqli_stmt_get_result(
+        $stmt_visit
+    );
 
 $visit = mysqli_fetch_assoc($visit_query);
 
