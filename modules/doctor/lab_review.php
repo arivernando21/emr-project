@@ -128,11 +128,35 @@ include '../../templates/navbar.php';
 
     <h3>Hasil Lab</h3>
 
-    <a href="print_lab_result.php?id=<?= $visit_id; ?>" target="_blank" class="action-btn">
+    <button type="button" class="action-btn" onclick="openLabResult()">
 
         Lihat Hasil Lab
 
-    </a>
+    </button>
+
+    <div id="lab-modal" class="lab-modal">
+
+        <div class="lab-modal-content">
+
+            <div class="lab-modal-header">
+
+                <h3>Hasil Lab Pasien</h3>
+
+                <button type="button" class="close-btn" onclick="closeLabResult()">
+
+                    ✕
+
+                </button>
+
+            </div>
+
+            <iframe src="print_lab_result.php?id=<?= $visit_id; ?>" frameborder="0">
+
+            </iframe>
+
+        </div>
+
+    </div>
 
     <hr>
 
@@ -220,6 +244,77 @@ include '../../templates/navbar.php';
 
 </div>
 
+<style>
+    .lab-modal {
+
+        display: none;
+
+        position: fixed;
+
+        z-index: 99999;
+
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background: rgba(0, 0, 0, 0.6);
+    }
+
+    .lab-modal-content {
+
+        background: white;
+
+        width: 90%;
+        height: 90%;
+
+        margin: 2% auto;
+
+        border-radius: 12px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lab-modal-header {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        padding: 15px 20px;
+
+        border-bottom: 1px solid #ddd;
+    }
+
+    .lab-modal iframe {
+
+        flex: 1;
+
+        width: 100%;
+    }
+
+    .close-btn {
+
+        background: red;
+
+        color: white;
+
+        border: none;
+
+        padding: 8px 14px;
+
+        border-radius: 6px;
+
+        cursor: pointer;
+    }
+</style>
+
 <script>
 
     function addMedicineRow() {
@@ -279,6 +374,24 @@ include '../../templates/navbar.php';
     </td>
 
     `;
+    }
+
+</script>
+
+<script>
+
+    function openLabResult() {
+
+        document.getElementById(
+            'lab-modal'
+        ).style.display = 'block';
+    }
+
+    function closeLabResult() {
+
+        document.getElementById(
+            'lab-modal'
+        ).style.display = 'none';
     }
 
 </script>

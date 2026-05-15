@@ -172,7 +172,7 @@ $first = mysqli_fetch_assoc($lab_query);
 
             <div>
 
-                <img src="../../assets/img/logo.png" width="80">
+                <img src="../../assets/img/logoOI.png" width="80">
 
             </div>
 
@@ -269,7 +269,7 @@ $first = mysqli_fetch_assoc($lab_query);
 
             <p>
 
-                Bandung,
+                Ogan Ilir,
                 <?= date('d-m-Y'); ?>
 
             </p>
